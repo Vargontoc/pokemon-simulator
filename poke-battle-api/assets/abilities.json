@@ -1,0 +1,1470 @@
+[
+  {
+    "Name": "stench",
+    "Id": 1
+  },
+  {
+    "Name": "drizzle",
+    "Id": 2
+  },
+  {
+    "Name": "speed-boost",
+    "Id": 3
+  },
+  {
+    "Name": "battle-armor",
+    "Id": 4
+  },
+  {
+    "Name": "sturdy",
+    "Id": 5
+  },
+  {
+    "Name": "damp",
+    "Id": 6
+  },
+  {
+    "Name": "limber",
+    "Id": 7
+  },
+  {
+    "Name": "sand-veil",
+    "Id": 8
+  },
+  {
+    "Name": "static",
+    "Id": 9
+  },
+  {
+    "Name": "volt-absorb",
+    "Id": 10
+  },
+  {
+    "Name": "water-absorb",
+    "Id": 11
+  },
+  {
+    "Name": "oblivious",
+    "Id": 12
+  },
+  {
+    "Name": "cloud-nine",
+    "Id": 13
+  },
+  {
+    "Name": "compound-eyes",
+    "Id": 14
+  },
+  {
+    "Name": "insomnia",
+    "Id": 15
+  },
+  {
+    "Name": "color-change",
+    "Id": 16
+  },
+  {
+    "Name": "immunity",
+    "Id": 17
+  },
+  {
+    "Name": "flash-fire",
+    "Id": 18
+  },
+  {
+    "Name": "shield-dust",
+    "Id": 19
+  },
+  {
+    "Name": "own-tempo",
+    "Id": 20
+  },
+  {
+    "Name": "suction-cups",
+    "Id": 21
+  },
+  {
+    "Name": "intimidate",
+    "Id": 22
+  },
+  {
+    "Name": "shadow-tag",
+    "Id": 23
+  },
+  {
+    "Name": "rough-skin",
+    "Id": 24
+  },
+  {
+    "Name": "wonder-guard",
+    "Id": 25
+  },
+  {
+    "Name": "levitate",
+    "Id": 26
+  },
+  {
+    "Name": "effect-spore",
+    "Id": 27
+  },
+  {
+    "Name": "synchronize",
+    "Id": 28
+  },
+  {
+    "Name": "clear-body",
+    "Id": 29
+  },
+  {
+    "Name": "natural-cure",
+    "Id": 30
+  },
+  {
+    "Name": "lightning-rod",
+    "Id": 31
+  },
+  {
+    "Name": "serene-grace",
+    "Id": 32
+  },
+  {
+    "Name": "swift-swim",
+    "Id": 33
+  },
+  {
+    "Name": "chlorophyll",
+    "Id": 34
+  },
+  {
+    "Name": "illuminate",
+    "Id": 35
+  },
+  {
+    "Name": "trace",
+    "Id": 36
+  },
+  {
+    "Name": "huge-power",
+    "Id": 37
+  },
+  {
+    "Name": "poison-point",
+    "Id": 38
+  },
+  {
+    "Name": "inner-focus",
+    "Id": 39
+  },
+  {
+    "Name": "magma-armor",
+    "Id": 40
+  },
+  {
+    "Name": "water-veil",
+    "Id": 41
+  },
+  {
+    "Name": "magnet-pull",
+    "Id": 42
+  },
+  {
+    "Name": "soundproof",
+    "Id": 43
+  },
+  {
+    "Name": "rain-dish",
+    "Id": 44
+  },
+  {
+    "Name": "sand-stream",
+    "Id": 45
+  },
+  {
+    "Name": "pressure",
+    "Id": 46
+  },
+  {
+    "Name": "thick-fat",
+    "Id": 47
+  },
+  {
+    "Name": "early-bird",
+    "Id": 48
+  },
+  {
+    "Name": "flame-body",
+    "Id": 49
+  },
+  {
+    "Name": "run-away",
+    "Id": 50
+  },
+  {
+    "Name": "keen-eye",
+    "Id": 51
+  },
+  {
+    "Name": "hyper-cutter",
+    "Id": 52
+  },
+  {
+    "Name": "pickup",
+    "Id": 53
+  },
+  {
+    "Name": "truant",
+    "Id": 54
+  },
+  {
+    "Name": "hustle",
+    "Id": 55
+  },
+  {
+    "Name": "cute-charm",
+    "Id": 56
+  },
+  {
+    "Name": "plus",
+    "Id": 57
+  },
+  {
+    "Name": "minus",
+    "Id": 58
+  },
+  {
+    "Name": "forecast",
+    "Id": 59
+  },
+  {
+    "Name": "sticky-hold",
+    "Id": 60
+  },
+  {
+    "Name": "shed-skin",
+    "Id": 61
+  },
+  {
+    "Name": "guts",
+    "Id": 62
+  },
+  {
+    "Name": "marvel-scale",
+    "Id": 63
+  },
+  {
+    "Name": "liquid-ooze",
+    "Id": 64
+  },
+  {
+    "Name": "overgrow",
+    "Id": 65
+  },
+  {
+    "Name": "blaze",
+    "Id": 66
+  },
+  {
+    "Name": "torrent",
+    "Id": 67
+  },
+  {
+    "Name": "swarm",
+    "Id": 68
+  },
+  {
+    "Name": "rock-head",
+    "Id": 69
+  },
+  {
+    "Name": "drought",
+    "Id": 70
+  },
+  {
+    "Name": "arena-trap",
+    "Id": 71
+  },
+  {
+    "Name": "vital-spirit",
+    "Id": 72
+  },
+  {
+    "Name": "white-smoke",
+    "Id": 73
+  },
+  {
+    "Name": "pure-power",
+    "Id": 74
+  },
+  {
+    "Name": "shell-armor",
+    "Id": 75
+  },
+  {
+    "Name": "air-lock",
+    "Id": 76
+  },
+  {
+    "Name": "tangled-feet",
+    "Id": 77
+  },
+  {
+    "Name": "motor-drive",
+    "Id": 78
+  },
+  {
+    "Name": "rivalry",
+    "Id": 79
+  },
+  {
+    "Name": "steadfast",
+    "Id": 80
+  },
+  {
+    "Name": "snow-cloak",
+    "Id": 81
+  },
+  {
+    "Name": "gluttony",
+    "Id": 82
+  },
+  {
+    "Name": "anger-point",
+    "Id": 83
+  },
+  {
+    "Name": "unburden",
+    "Id": 84
+  },
+  {
+    "Name": "heatproof",
+    "Id": 85
+  },
+  {
+    "Name": "simple",
+    "Id": 86
+  },
+  {
+    "Name": "dry-skin",
+    "Id": 87
+  },
+  {
+    "Name": "download",
+    "Id": 88
+  },
+  {
+    "Name": "iron-fist",
+    "Id": 89
+  },
+  {
+    "Name": "poison-heal",
+    "Id": 90
+  },
+  {
+    "Name": "adaptability",
+    "Id": 91
+  },
+  {
+    "Name": "skill-link",
+    "Id": 92
+  },
+  {
+    "Name": "hydration",
+    "Id": 93
+  },
+  {
+    "Name": "solar-power",
+    "Id": 94
+  },
+  {
+    "Name": "quick-feet",
+    "Id": 95
+  },
+  {
+    "Name": "normalize",
+    "Id": 96
+  },
+  {
+    "Name": "sniper",
+    "Id": 97
+  },
+  {
+    "Name": "magic-guard",
+    "Id": 98
+  },
+  {
+    "Name": "no-guard",
+    "Id": 99
+  },
+  {
+    "Name": "stall",
+    "Id": 100
+  },
+  {
+    "Name": "technician",
+    "Id": 101
+  },
+  {
+    "Name": "leaf-guard",
+    "Id": 102
+  },
+  {
+    "Name": "klutz",
+    "Id": 103
+  },
+  {
+    "Name": "mold-breaker",
+    "Id": 104
+  },
+  {
+    "Name": "super-luck",
+    "Id": 105
+  },
+  {
+    "Name": "aftermath",
+    "Id": 106
+  },
+  {
+    "Name": "anticipation",
+    "Id": 107
+  },
+  {
+    "Name": "forewarn",
+    "Id": 108
+  },
+  {
+    "Name": "unaware",
+    "Id": 109
+  },
+  {
+    "Name": "tinted-lens",
+    "Id": 110
+  },
+  {
+    "Name": "filter",
+    "Id": 111
+  },
+  {
+    "Name": "slow-start",
+    "Id": 112
+  },
+  {
+    "Name": "scrappy",
+    "Id": 113
+  },
+  {
+    "Name": "storm-drain",
+    "Id": 114
+  },
+  {
+    "Name": "ice-body",
+    "Id": 115
+  },
+  {
+    "Name": "solid-rock",
+    "Id": 116
+  },
+  {
+    "Name": "snow-warning",
+    "Id": 117
+  },
+  {
+    "Name": "honey-gather",
+    "Id": 118
+  },
+  {
+    "Name": "frisk",
+    "Id": 119
+  },
+  {
+    "Name": "reckless",
+    "Id": 120
+  },
+  {
+    "Name": "multitype",
+    "Id": 121
+  },
+  {
+    "Name": "flower-gift",
+    "Id": 122
+  },
+  {
+    "Name": "bad-dreams",
+    "Id": 123
+  },
+  {
+    "Name": "pickpocket",
+    "Id": 124
+  },
+  {
+    "Name": "sheer-force",
+    "Id": 125
+  },
+  {
+    "Name": "contrary",
+    "Id": 126
+  },
+  {
+    "Name": "unnerve",
+    "Id": 127
+  },
+  {
+    "Name": "defiant",
+    "Id": 128
+  },
+  {
+    "Name": "defeatist",
+    "Id": 129
+  },
+  {
+    "Name": "cursed-body",
+    "Id": 130
+  },
+  {
+    "Name": "healer",
+    "Id": 131
+  },
+  {
+    "Name": "friend-guard",
+    "Id": 132
+  },
+  {
+    "Name": "weak-armor",
+    "Id": 133
+  },
+  {
+    "Name": "heavy-metal",
+    "Id": 134
+  },
+  {
+    "Name": "light-metal",
+    "Id": 135
+  },
+  {
+    "Name": "multiscale",
+    "Id": 136
+  },
+  {
+    "Name": "toxic-boost",
+    "Id": 137
+  },
+  {
+    "Name": "flare-boost",
+    "Id": 138
+  },
+  {
+    "Name": "harvest",
+    "Id": 139
+  },
+  {
+    "Name": "telepathy",
+    "Id": 140
+  },
+  {
+    "Name": "moody",
+    "Id": 141
+  },
+  {
+    "Name": "overcoat",
+    "Id": 142
+  },
+  {
+    "Name": "poison-touch",
+    "Id": 143
+  },
+  {
+    "Name": "regenerator",
+    "Id": 144
+  },
+  {
+    "Name": "big-pecks",
+    "Id": 145
+  },
+  {
+    "Name": "sand-rush",
+    "Id": 146
+  },
+  {
+    "Name": "wonder-skin",
+    "Id": 147
+  },
+  {
+    "Name": "analytic",
+    "Id": 148
+  },
+  {
+    "Name": "illusion",
+    "Id": 149
+  },
+  {
+    "Name": "imposter",
+    "Id": 150
+  },
+  {
+    "Name": "infiltrator",
+    "Id": 151
+  },
+  {
+    "Name": "mummy",
+    "Id": 152
+  },
+  {
+    "Name": "moxie",
+    "Id": 153
+  },
+  {
+    "Name": "justified",
+    "Id": 154
+  },
+  {
+    "Name": "rattled",
+    "Id": 155
+  },
+  {
+    "Name": "magic-bounce",
+    "Id": 156
+  },
+  {
+    "Name": "sap-sipper",
+    "Id": 157
+  },
+  {
+    "Name": "prankster",
+    "Id": 158
+  },
+  {
+    "Name": "sand-force",
+    "Id": 159
+  },
+  {
+    "Name": "iron-barbs",
+    "Id": 160
+  },
+  {
+    "Name": "zen-mode",
+    "Id": 161
+  },
+  {
+    "Name": "victory-star",
+    "Id": 162
+  },
+  {
+    "Name": "turboblaze",
+    "Id": 163
+  },
+  {
+    "Name": "teravolt",
+    "Id": 164
+  },
+  {
+    "Name": "aroma-veil",
+    "Id": 165
+  },
+  {
+    "Name": "flower-veil",
+    "Id": 166
+  },
+  {
+    "Name": "cheek-pouch",
+    "Id": 167
+  },
+  {
+    "Name": "protean",
+    "Id": 168
+  },
+  {
+    "Name": "fur-coat",
+    "Id": 169
+  },
+  {
+    "Name": "magician",
+    "Id": 170
+  },
+  {
+    "Name": "bulletproof",
+    "Id": 171
+  },
+  {
+    "Name": "competitive",
+    "Id": 172
+  },
+  {
+    "Name": "strong-jaw",
+    "Id": 173
+  },
+  {
+    "Name": "refrigerate",
+    "Id": 174
+  },
+  {
+    "Name": "sweet-veil",
+    "Id": 175
+  },
+  {
+    "Name": "stance-change",
+    "Id": 176
+  },
+  {
+    "Name": "gale-wings",
+    "Id": 177
+  },
+  {
+    "Name": "mega-launcher",
+    "Id": 178
+  },
+  {
+    "Name": "grass-pelt",
+    "Id": 179
+  },
+  {
+    "Name": "symbiosis",
+    "Id": 180
+  },
+  {
+    "Name": "tough-claws",
+    "Id": 181
+  },
+  {
+    "Name": "pixilate",
+    "Id": 182
+  },
+  {
+    "Name": "gooey",
+    "Id": 183
+  },
+  {
+    "Name": "aerilate",
+    "Id": 184
+  },
+  {
+    "Name": "parental-bond",
+    "Id": 185
+  },
+  {
+    "Name": "dark-aura",
+    "Id": 186
+  },
+  {
+    "Name": "fairy-aura",
+    "Id": 187
+  },
+  {
+    "Name": "aura-break",
+    "Id": 188
+  },
+  {
+    "Name": "primordial-sea",
+    "Id": 189
+  },
+  {
+    "Name": "desolate-land",
+    "Id": 190
+  },
+  {
+    "Name": "delta-stream",
+    "Id": 191
+  },
+  {
+    "Name": "stamina",
+    "Id": 192
+  },
+  {
+    "Name": "wimp-out",
+    "Id": 193
+  },
+  {
+    "Name": "emergency-exit",
+    "Id": 194
+  },
+  {
+    "Name": "water-compaction",
+    "Id": 195
+  },
+  {
+    "Name": "merciless",
+    "Id": 196
+  },
+  {
+    "Name": "shields-down",
+    "Id": 197
+  },
+  {
+    "Name": "stakeout",
+    "Id": 198
+  },
+  {
+    "Name": "water-bubble",
+    "Id": 199
+  },
+  {
+    "Name": "steelworker",
+    "Id": 200
+  },
+  {
+    "Name": "berserk",
+    "Id": 201
+  },
+  {
+    "Name": "slush-rush",
+    "Id": 202
+  },
+  {
+    "Name": "long-reach",
+    "Id": 203
+  },
+  {
+    "Name": "liquid-voice",
+    "Id": 204
+  },
+  {
+    "Name": "triage",
+    "Id": 205
+  },
+  {
+    "Name": "galvanize",
+    "Id": 206
+  },
+  {
+    "Name": "surge-surfer",
+    "Id": 207
+  },
+  {
+    "Name": "schooling",
+    "Id": 208
+  },
+  {
+    "Name": "disguise",
+    "Id": 209
+  },
+  {
+    "Name": "battle-bond",
+    "Id": 210
+  },
+  {
+    "Name": "power-construct",
+    "Id": 211
+  },
+  {
+    "Name": "corrosion",
+    "Id": 212
+  },
+  {
+    "Name": "comatose",
+    "Id": 213
+  },
+  {
+    "Name": "queenly-majesty",
+    "Id": 214
+  },
+  {
+    "Name": "innards-out",
+    "Id": 215
+  },
+  {
+    "Name": "dancer",
+    "Id": 216
+  },
+  {
+    "Name": "battery",
+    "Id": 217
+  },
+  {
+    "Name": "fluffy",
+    "Id": 218
+  },
+  {
+    "Name": "dazzling",
+    "Id": 219
+  },
+  {
+    "Name": "soul-heart",
+    "Id": 220
+  },
+  {
+    "Name": "tangling-hair",
+    "Id": 221
+  },
+  {
+    "Name": "receiver",
+    "Id": 222
+  },
+  {
+    "Name": "power-of-alchemy",
+    "Id": 223
+  },
+  {
+    "Name": "beast-boost",
+    "Id": 224
+  },
+  {
+    "Name": "rks-system",
+    "Id": 225
+  },
+  {
+    "Name": "electric-surge",
+    "Id": 226
+  },
+  {
+    "Name": "psychic-surge",
+    "Id": 227
+  },
+  {
+    "Name": "misty-surge",
+    "Id": 228
+  },
+  {
+    "Name": "grassy-surge",
+    "Id": 229
+  },
+  {
+    "Name": "full-metal-body",
+    "Id": 230
+  },
+  {
+    "Name": "shadow-shield",
+    "Id": 231
+  },
+  {
+    "Name": "prism-armor",
+    "Id": 232
+  },
+  {
+    "Name": "neuroforce",
+    "Id": 233
+  },
+  {
+    "Name": "intrepid-sword",
+    "Id": 234
+  },
+  {
+    "Name": "dauntless-shield",
+    "Id": 235
+  },
+  {
+    "Name": "libero",
+    "Id": 236
+  },
+  {
+    "Name": "ball-fetch",
+    "Id": 237
+  },
+  {
+    "Name": "cotton-down",
+    "Id": 238
+  },
+  {
+    "Name": "propeller-tail",
+    "Id": 239
+  },
+  {
+    "Name": "mirror-armor",
+    "Id": 240
+  },
+  {
+    "Name": "gulp-missile",
+    "Id": 241
+  },
+  {
+    "Name": "stalwart",
+    "Id": 242
+  },
+  {
+    "Name": "steam-engine",
+    "Id": 243
+  },
+  {
+    "Name": "punk-rock",
+    "Id": 244
+  },
+  {
+    "Name": "sand-spit",
+    "Id": 245
+  },
+  {
+    "Name": "ice-scales",
+    "Id": 246
+  },
+  {
+    "Name": "ripen",
+    "Id": 247
+  },
+  {
+    "Name": "ice-face",
+    "Id": 248
+  },
+  {
+    "Name": "power-spot",
+    "Id": 249
+  },
+  {
+    "Name": "mimicry",
+    "Id": 250
+  },
+  {
+    "Name": "screen-cleaner",
+    "Id": 251
+  },
+  {
+    "Name": "steely-spirit",
+    "Id": 252
+  },
+  {
+    "Name": "perish-body",
+    "Id": 253
+  },
+  {
+    "Name": "wandering-spirit",
+    "Id": 254
+  },
+  {
+    "Name": "gorilla-tactics",
+    "Id": 255
+  },
+  {
+    "Name": "neutralizing-gas",
+    "Id": 256
+  },
+  {
+    "Name": "pastel-veil",
+    "Id": 257
+  },
+  {
+    "Name": "hunger-switch",
+    "Id": 258
+  },
+  {
+    "Name": "quick-draw",
+    "Id": 259
+  },
+  {
+    "Name": "unseen-fist",
+    "Id": 260
+  },
+  {
+    "Name": "curious-medicine",
+    "Id": 261
+  },
+  {
+    "Name": "transistor",
+    "Id": 262
+  },
+  {
+    "Name": "dragons-maw",
+    "Id": 263
+  },
+  {
+    "Name": "chilling-neigh",
+    "Id": 264
+  },
+  {
+    "Name": "grim-neigh",
+    "Id": 265
+  },
+  {
+    "Name": "as-one-glastrier",
+    "Id": 266
+  },
+  {
+    "Name": "as-one-spectrier",
+    "Id": 267
+  },
+  {
+    "Name": "lingering-aroma",
+    "Id": 268
+  },
+  {
+    "Name": "seed-sower",
+    "Id": 269
+  },
+  {
+    "Name": "thermal-exchange",
+    "Id": 270
+  },
+  {
+    "Name": "anger-shell",
+    "Id": 271
+  },
+  {
+    "Name": "purifying-salt",
+    "Id": 272
+  },
+  {
+    "Name": "well-baked-body",
+    "Id": 273
+  },
+  {
+    "Name": "wind-rider",
+    "Id": 274
+  },
+  {
+    "Name": "guard-dog",
+    "Id": 275
+  },
+  {
+    "Name": "rocky-payload",
+    "Id": 276
+  },
+  {
+    "Name": "wind-power",
+    "Id": 277
+  },
+  {
+    "Name": "zero-to-hero",
+    "Id": 278
+  },
+  {
+    "Name": "commander",
+    "Id": 279
+  },
+  {
+    "Name": "electromorphosis",
+    "Id": 280
+  },
+  {
+    "Name": "protosynthesis",
+    "Id": 281
+  },
+  {
+    "Name": "quark-drive",
+    "Id": 282
+  },
+  {
+    "Name": "good-as-gold",
+    "Id": 283
+  },
+  {
+    "Name": "vessel-of-ruin",
+    "Id": 284
+  },
+  {
+    "Name": "sword-of-ruin",
+    "Id": 285
+  },
+  {
+    "Name": "tablets-of-ruin",
+    "Id": 286
+  },
+  {
+    "Name": "beads-of-ruin",
+    "Id": 287
+  },
+  {
+    "Name": "orichalcum-pulse",
+    "Id": 288
+  },
+  {
+    "Name": "hadron-engine",
+    "Id": 289
+  },
+  {
+    "Name": "opportunist",
+    "Id": 290
+  },
+  {
+    "Name": "cud-chew",
+    "Id": 291
+  },
+  {
+    "Name": "sharpness",
+    "Id": 292
+  },
+  {
+    "Name": "supreme-overlord",
+    "Id": 293
+  },
+  {
+    "Name": "costar",
+    "Id": 294
+  },
+  {
+    "Name": "toxic-debris",
+    "Id": 295
+  },
+  {
+    "Name": "armor-tail",
+    "Id": 296
+  },
+  {
+    "Name": "earth-eater",
+    "Id": 297
+  },
+  {
+    "Name": "mycelium-might",
+    "Id": 298
+  },
+  {
+    "Name": "minds-eye",
+    "Id": 299
+  },
+  {
+    "Name": "supersweet-syrup",
+    "Id": 300
+  },
+  {
+    "Name": "hospitality",
+    "Id": 301
+  },
+  {
+    "Name": "toxic-chain",
+    "Id": 302
+  },
+  {
+    "Name": "embody-aspect",
+    "Id": 303
+  },
+  {
+    "Name": "tera-shift",
+    "Id": 304
+  },
+  {
+    "Name": "tera-shell",
+    "Id": 305
+  },
+  {
+    "Name": "teraform-zero",
+    "Id": 306
+  },
+  {
+    "Name": "poison-puppeteer",
+    "Id": 307
+  },
+  {
+    "Name": "mountaineer",
+    "Id": 308
+  },
+  {
+    "Name": "wave-rider",
+    "Id": 309
+  },
+  {
+    "Name": "skater",
+    "Id": 310
+  },
+  {
+    "Name": "thrust",
+    "Id": 311
+  },
+  {
+    "Name": "perception",
+    "Id": 312
+  },
+  {
+    "Name": "parry",
+    "Id": 313
+  },
+  {
+    "Name": "instinct",
+    "Id": 314
+  },
+  {
+    "Name": "dodge",
+    "Id": 315
+  },
+  {
+    "Name": "jagged-edge",
+    "Id": 316
+  },
+  {
+    "Name": "frostbite",
+    "Id": 317
+  },
+  {
+    "Name": "tenacity",
+    "Id": 318
+  },
+  {
+    "Name": "pride",
+    "Id": 319
+  },
+  {
+    "Name": "deep-sleep",
+    "Id": 320
+  },
+  {
+    "Name": "power-nap",
+    "Id": 321
+  },
+  {
+    "Name": "spirit",
+    "Id": 322
+  },
+  {
+    "Name": "warm-blanket",
+    "Id": 323
+  },
+  {
+    "Name": "gulp",
+    "Id": 324
+  },
+  {
+    "Name": "herbivore",
+    "Id": 325
+  },
+  {
+    "Name": "sandpit",
+    "Id": 326
+  },
+  {
+    "Name": "hot-blooded",
+    "Id": 327
+  },
+  {
+    "Name": "medic",
+    "Id": 328
+  },
+  {
+    "Name": "life-force",
+    "Id": 329
+  },
+  {
+    "Name": "lunchbox",
+    "Id": 330
+  },
+  {
+    "Name": "nurse",
+    "Id": 331
+  },
+  {
+    "Name": "melee",
+    "Id": 332
+  },
+  {
+    "Name": "sponge",
+    "Id": 333
+  },
+  {
+    "Name": "bodyguard",
+    "Id": 334
+  },
+  {
+    "Name": "hero",
+    "Id": 335
+  },
+  {
+    "Name": "last-bastion",
+    "Id": 336
+  },
+  {
+    "Name": "stealth",
+    "Id": 337
+  },
+  {
+    "Name": "vanguard",
+    "Id": 338
+  },
+  {
+    "Name": "nomad",
+    "Id": 339
+  },
+  {
+    "Name": "sequence",
+    "Id": 340
+  },
+  {
+    "Name": "grass-cloak",
+    "Id": 341
+  },
+  {
+    "Name": "celebrate",
+    "Id": 342
+  },
+  {
+    "Name": "lullaby",
+    "Id": 343
+  },
+  {
+    "Name": "calming",
+    "Id": 344
+  },
+  {
+    "Name": "daze",
+    "Id": 345
+  },
+  {
+    "Name": "frighten",
+    "Id": 346
+  },
+  {
+    "Name": "interference",
+    "Id": 347
+  },
+  {
+    "Name": "mood-maker",
+    "Id": 348
+  },
+  {
+    "Name": "confidence",
+    "Id": 349
+  },
+  {
+    "Name": "fortune",
+    "Id": 350
+  },
+  {
+    "Name": "bonanza",
+    "Id": 351
+  },
+  {
+    "Name": "explode",
+    "Id": 352
+  },
+  {
+    "Name": "omnipotent",
+    "Id": 353
+  },
+  {
+    "Name": "share",
+    "Id": 354
+  },
+  {
+    "Name": "black-hole",
+    "Id": 355
+  },
+  {
+    "Name": "shadow-dash",
+    "Id": 356
+  },
+  {
+    "Name": "sprint",
+    "Id": 357
+  },
+  {
+    "Name": "disgust",
+    "Id": 358
+  },
+  {
+    "Name": "high-rise",
+    "Id": 359
+  },
+  {
+    "Name": "climber",
+    "Id": 360
+  },
+  {
+    "Name": "flame-boost",
+    "Id": 361
+  },
+  {
+    "Name": "aqua-boost",
+    "Id": 362
+  },
+  {
+    "Name": "run-up",
+    "Id": 363
+  },
+  {
+    "Name": "conqueror",
+    "Id": 364
+  },
+  {
+    "Name": "shackle",
+    "Id": 365
+  },
+  {
+    "Name": "decoy",
+    "Id": 366
+  },
+  {
+    "Name": "shield",
+    "Id": 367
+  }
+]
