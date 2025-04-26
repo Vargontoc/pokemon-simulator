@@ -6,52 +6,11 @@ namespace poke.battle.infraestructure.repositories.impl
 {
     public class MovesRepository : GenericRepository<MoveModel, MovesFilter>, IMoveRepository
     {
-        private HttpClient _client;
-        public MovesRepository(HttpClient client):base()
+        public MovesRepository() : base()
         {
             STORED_FILE = "moves.json";
-            _client = client;
-            this._client.BaseAddress = new(URI_POKE_API);
-
-            Initialize();
         }
 
-        public override async void Initialize()
-        {
-            if(!File.Exists(GetFullPath())) 
-            {
-                var res = await _client.GetAsync("move?limit=1000&offset=0");
-                if(!res.IsSuccessStatusCode)
-                {
-                    throw new RepositoryException("Could not initialize repository");
-                }   
-
-                var json = await res.Content.ReadAsStringAsync();
-                dynamic? data = JsonConvert.DeserializeObject(json);
-                if(data != null)
-                {
-                    List<MoveModel> models = new();
-                    int count = 1;
-                    foreach(var d in data.results)
-                    {
-                        string url = d.url;
-                        var details = await _client.GetAsync(url);
-                        if(!details.IsSuccessStatusCode){
-                            throw new RepositoryException($"Error retreiving type details for {d.name}");
-                        }
-
-                        var detailJson = details.Content.ReadAsStringAsync();
-                        dynamic detailData  = JsonConvert.DeserializeObject(detailJson.Result)!;                        
-                    
-                        models.Add(Map(detailData, count++));
-                    
-                    }
-
-
-                    Save(models);
-                }
-            }
-        }
 
         private MoveModel Map(dynamic data, int count)
         {

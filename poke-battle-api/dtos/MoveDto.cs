@@ -6,7 +6,7 @@
         public string InternalName { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public TypeDto Type { get; set; }
+        public TypeDto Type { get; set; } = null!;
         public int Power { get; set; }
         public int Accuracy { get; set; }
         public int Priority { get; set; }

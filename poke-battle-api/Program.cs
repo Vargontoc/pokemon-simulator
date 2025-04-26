@@ -1,6 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using poke.battle.core;
+using poke.battle.infraestructure.repositories;
+using poke.battle.infraestructure.repositories.impl;
 using poke.battle.Models;
 using poke.battle.Models.Impl;
 using poke.battle.services;
@@ -15,15 +17,20 @@ builder.Services.AddControllers()
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, allowIntegerValues: false));
     });;
-builder.Services.AddHttpClient<AbilitiesService>();
-builder.Services.AddHttpClient<TypesService>();
-builder.Services.AddHttpClient<MovesService>();
-builder.Services.AddHttpClient<PokemonsService>();
 
+// Repositories
+builder.Services.AddScoped<IAbilitiesRespository, AbilitiesRepository>();
+builder.Services.AddScoped<ITypeRepository, TypesRepository>();
+builder.Services.AddScoped<IMoveRepository, MovesRepository>();
+builder.Services.AddScoped<IPokemonsRepository, PokemonsRepository>();
+
+// Services
 builder.Services.AddScoped<IAbilityService, AbilitiesService>();
 builder.Services.AddScoped<ITypeService, TypesService>();
 builder.Services.AddScoped<IMoveService, MovesService>();
 builder.Services.AddScoped<IPokemonService, PokemonsService>();
+
+// Mappers
 builder.Services.AddScoped<IMapper<TypeDto, TypeModel>, TypeMapper>();
 builder.Services.AddScoped<IMapper< MoveDto, MoveModel>, MoveMapper>();
 

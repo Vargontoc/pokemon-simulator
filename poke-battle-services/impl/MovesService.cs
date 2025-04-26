@@ -6,9 +6,8 @@ using poke.battle.services;
 
 namespace poke.battle.services.impl
 {
-    public class MovesService(HttpClient client) : IMoveService
+    public class MovesService(IMoveRepository repository) : IMoveService
     {
-        private readonly IMoveRepository repository = new MovesRepository(client);
 
         public PageResponse<MoveModel> FindAll(MovesFilter filter, PageRequest pageRequest)
         {

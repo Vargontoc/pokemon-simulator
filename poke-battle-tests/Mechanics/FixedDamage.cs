@@ -3,6 +3,7 @@ using poke.battle.factories;
 using poke.battle.services.impl;
 using poke.battle.services;
 using poke.battle.Models.helpers;
+using poke.battle.infraestructure.repositories.impl;
 
 namespace poke_battle_tests.Mechanics
 {
@@ -12,10 +13,10 @@ namespace poke_battle_tests.Mechanics
         [Fact]
         public void DragonRage_DealsFixedDamage()
         {
-            ITypeService typeService = new TypesService(new HttpClient());
+            ITypeService typeService = new TypesService(new TypesRepository());
             TypeEffectivenessResolver.Initialize(typeService.FindAll(null!, null!).Results);
-            IPokemonService specieService = new PokemonsService(new HttpClient());
-            IMoveService moveService = new MovesService(new HttpClient());
+            IPokemonService specieService = new PokemonsService(new PokemonsRepository());
+            IMoveService moveService = new MovesService(new MovesRepository());
 
             var factory = new BattlerFactory(specieService, moveService);
             var attacker = factory.CreateBattler("bulbasaur", 50, null);
@@ -38,10 +39,10 @@ namespace poke_battle_tests.Mechanics
         [Fact]
         public void SeismicToss_DealsFixedDamage()
         {
-            ITypeService typeService = new TypesService(new HttpClient());
+            ITypeService typeService = new TypesService(new TypesRepository());
             TypeEffectivenessResolver.Initialize(typeService.FindAll(null!, null!).Results);
-            IPokemonService specieService = new PokemonsService(new HttpClient());
-            IMoveService moveService = new MovesService(new HttpClient());
+            IPokemonService specieService = new PokemonsService(new PokemonsRepository());
+            IMoveService moveService = new MovesService(new MovesRepository());
 
             var factory = new BattlerFactory(specieService, moveService);
             var attacker = factory.CreateBattler("bulbasaur", 50, null);

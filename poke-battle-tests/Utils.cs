@@ -1,5 +1,6 @@
 ﻿using poke.battle.core;
 using poke.battle.factories;
+using poke.battle.infraestructure.repositories.impl;
 using poke.battle.services;
 using poke.battle.services.impl;
 using System;
@@ -18,10 +19,10 @@ namespace poke_battle_tests
         {
             if(_factory == null)
             {
-                ITypeService typeService = new TypesService(new());
+                ITypeService typeService = new TypesService(new TypesRepository());
                 TypeEffectivenessResolver.Initialize(typeService.FindAll(null!, null!).Results);
-                IPokemonService pokeService = new PokemonsService(new());
-                IMoveService moveService = new MovesService(new());
+                IPokemonService pokeService = new PokemonsService(new PokemonsRepository());
+                IMoveService moveService = new MovesService(new MovesRepository());
 
                 _factory = new BattlerFactory(pokeService, moveService);
             }

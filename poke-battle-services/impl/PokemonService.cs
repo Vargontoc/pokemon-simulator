@@ -5,9 +5,8 @@ using poke.battle.Models.Impl;
 
 namespace poke.battle.services.impl
 {
-    public class PokemonsService(HttpClient client) : IPokemonService
+    public class PokemonsService(IPokemonsRepository repository) : IPokemonService
     {
-        private readonly IPokemonsRepository repository = new PokemonsRepository(client);
 
         public PageResponse<SpecieModel> FindAll(PokemonsFilter filter, PageRequest pageRequest)
         {

@@ -1,4 +1,5 @@
 ﻿using poke.battle.core;
+using poke.battle.infraestructure.repositories.impl;
 using poke.battle.Models.Impl;
 using poke.battle.services;
 using poke.battle.services.impl;
@@ -10,7 +11,7 @@ namespace poke_battle_api.mappers.impl
     {
         public static PBattlerDto ConvertTo(PBattler battler)
         {
-            IMapper<TypeDto, TypeModel> mapper = new TypeMapper(new TypesService(new HttpClient()));
+            IMapper<TypeDto, TypeModel> mapper = new TypeMapper(new TypesService(new TypesRepository()));
             return new()
             {
                 Nickname = battler.Nickname,

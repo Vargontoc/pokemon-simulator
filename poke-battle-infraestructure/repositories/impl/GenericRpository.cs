@@ -10,7 +10,7 @@ namespace poke.battle.infraestructure.repositories.impl
         where F : IFilter<T>, new()
     {
         protected string STORED_FILE = string.Empty;
-        private string DIRECTORY_PATH = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/poke-api";
+        private string DIRECTORY_PATH = Path.Combine(AppContext.BaseDirectory, "PBS");
         protected List<Func<T, bool>> predicates = [];
         public GenericRepository() {
             if(!Directory.Exists(DIRECTORY_PATH)) 
@@ -55,8 +55,6 @@ namespace poke.battle.infraestructure.repositories.impl
         }
 
         protected abstract void CreatePredicates(F filter);
-
-        public abstract void Initialize();
 
         public T FindById(int id)
         {
@@ -177,9 +175,9 @@ namespace poke.battle.infraestructure.repositories.impl
         }
         
         protected string GetFullPath()  {
-            return $"{DIRECTORY_PATH}/{STORED_FILE}";
+            return Path.Combine(DIRECTORY_PATH, STORED_FILE);
         }
-        public const string URI_POKE_API = "https://pokeapi.co/api/v2/";
+
 
     }
 }

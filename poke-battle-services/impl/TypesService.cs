@@ -6,13 +6,8 @@ using poke_battle_infraestructure.validators;
 
 namespace poke.battle.services.impl
 {
-    public class TypesService : ITypeService
+    public class TypesService(ITypeRepository repository) : ITypeService
     {
-        private readonly ITypeRepository repository;
-        public TypesService(HttpClient client)
-        {
-            repository = new TypesRepository(client);
-        }
 
         public PageResponse<TypeModel> FindAll(TypesFilter filter, PageRequest pageRequest)
         {

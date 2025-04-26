@@ -2,15 +2,13 @@
 using poke.battle.infraestructure.filters;
 using poke.battle.infraestructure.filters.impl;
 using poke.battle.infraestructure.repositories;
-using poke.battle.infraestructure.repositories.impl;
 using poke.battle.Models.Impl;
 using poke_battle_infraestructure.validators;
 
 namespace poke.battle.services.impl
 {
-    public class AbilitiesService(HttpClient client) : IAbilityService
+    public class AbilitiesService(IAbilitiesRespository repository) : IAbilityService
     {
-        private readonly IAbilitiesRespository repository = new AbilitiesRepository(client);
 
         public PageResponse<AbilityModel> FindAll(AbilitiesFilter filter, PageRequest pageRequest)
         {
