@@ -29,6 +29,5 @@ onMounted(async () => {
 const result = await service.startBattle();
 player.value = result.player;
 enemy.value = result.player;
-console.log(result);
 })
 </script>

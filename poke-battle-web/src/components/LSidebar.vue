@@ -14,7 +14,7 @@
 
         <l-dropdown title="Simuladores">
             <RouterLink to="/simulator/damage" class="dropdown-link">Calculadora daño</RouterLink>
-            <RouterLink to="/simulator/experience" class="dropdown-link">Experiencia</RouterLink>
+            <RouterLink to="/simulator-experience" class="dropdown-link">Experiencia</RouterLink>
             <RouterLink to="/simulator/growth" class="dropdown-link">Crianza</RouterLink>
             <RouterLink to="/simulator/battle" class="dropdown-link">Batalla</RouterLink>
         </l-dropdown>

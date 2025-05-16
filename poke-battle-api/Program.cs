@@ -54,6 +54,7 @@ using (var scope = app.Services.CreateScope())
     TypeEffectivenessResolver.Initialize(typ);
     CoreSettings.InitCore(abs, mvs, spc);
 }
+Calculator.InitializeTables();
 
     app.UseCors("AllowVueDev");
 app.MapControllers();

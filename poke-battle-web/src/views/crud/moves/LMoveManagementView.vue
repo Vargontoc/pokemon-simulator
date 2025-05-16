@@ -1,6 +1,10 @@
 <template>
 <div class="view">
-    <l-actions @refresh="handleRefresh" />
+    <l-filter-view :show="showFilter">
+        <p-move-filter-view :filter="filter" />
+    </l-filter-view>
+
+    <l-actions @refresh="handleRefresh" @search="handleSearch" @search-filter="handleRefresh"  />
 
     <l-table :columns="columns" :rows="items" :pagination="pagination"
         @sort-column="handleSort"
@@ -25,6 +29,9 @@ import LTable from '@/components/LTable.vue';
 import LActions from '@/components/LActions.vue';
 import type { PageSize } from '@/models/PageSize';
 import type { OrderBy } from '@/models/OrderBy';
+import LFilterView from '@/components/LFilterView.vue';
+import PMoveFilterView from './PMoveFilterView.vue';
+
 const service = new MovesService(client);
 const request = ref<PageRequest>(new PageRequest());
 const filter = ref<MovesFilter>(new MovesFilter());
@@ -42,6 +49,8 @@ const columns = ref<LColumn[]>([
     { key: "priority", display: "Prioridad" },
     { key: "description", display: "Descripción" }
 ])
+
+const showFilter = ref(false);
 
 const getItems = async () => {
     const response = await service.getAll(filter.value, request.value) as PageResponse;
@@ -100,6 +109,10 @@ const handleSort = (event: OrderBy) =>{
 
 const handleRefresh = () => {
     getItems()
+}
+
+const handleSearch = () => {
+    showFilter.value = !showFilter.value
 }
 
 </script>

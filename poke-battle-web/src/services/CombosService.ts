@@ -11,4 +11,14 @@ export class ComboService {
         const res = await this.http.get<LCombo>('/combos/types');
         return res.data;
     }
+
+    async getMoveCategories() : Promise<LCombo> {
+        const res = await this.http.get<LCombo>('/combos/move-categories');
+        return res.data;
+    }
+
+    async getGrowth() : Promise<LCombo> {
+        const res = await this.http.get<LCombo>('/combos/growths');
+        return res.data;
+    }
 }
