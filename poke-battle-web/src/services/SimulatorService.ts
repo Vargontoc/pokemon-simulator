@@ -1,4 +1,3 @@
-import { CalcExp } from "@/models/simulator/CalcExp";
 import type { PBattler } from "@/models/simulator/PBattler"
 import type { AxiosInstance } from "axios"
 
@@ -20,6 +19,11 @@ export class SimulatorService {
             code: code,
             level: level
         });
+        return res.data;
+    }
+
+    async getGraphGrowth(code: string) : Promise<number[]> {
+        const res =  await this.http.get(`/simulator/experience/graph/${code}`);
         return res.data;
     }
 }

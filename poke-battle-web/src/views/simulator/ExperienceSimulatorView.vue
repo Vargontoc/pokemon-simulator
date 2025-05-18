@@ -18,23 +18,12 @@
         </div>
 
         <!-- Chart for experience data -->
-        <div class="chart">
-            <h3>Experience Chart</h3>
-            <ul>
-            <li v-for="(data, index) in experienceChartData" :key="index">
-                {{ data }}
-            </li>
-            </ul>
+        <div class="chart" v-if="experienceChartData.length > 0">
+                <label class="form-label" for="chart-experience">Experiencia:</label>
+                <Line :data="chartData" :options="chartOptions" />
         </div>
 
         <!-- Party members and combat experience -->
-        <div class="party">
-            <h3>Party Members</h3>
-            <div v-for="(member, index) in party" :key="index" class="party-member">
-            <span>{{ member.name }}</span>
-            <span>Experience: {{ member.experience }}</span>
-            </div>
-        </div>
         <div class="row">
             <label>Combat Experience:</label>
             <span>{{ combatExperience }}</span>
@@ -50,7 +39,10 @@ import LComboComponent from '@/components/LComboComponent.vue';
 import { ComboService } from '@/services/CombosService';
 import client from '@/services/axios';
 import { SimulatorService } from '@/services/SimulatorService';
+import { Chart as ChartJS, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, CategoryScale } from 'chart.js';
+import { Line } from 'vue-chartjs';
 
+ChartJS.register(Title, Tooltip, Legend, LineElement, LinearScale, PointElement, CategoryScale);
 const comboService = new ComboService(client);  
 const expService = new SimulatorService(client);
 
@@ -59,11 +51,39 @@ const levelInput = ref(1);
 const experienceResult = ref(0);
 const visibleResult = ref(false);
 const selectedGrowth = ref<string | undefined>(undefined);
-const experienceChartData = ref([]);
+const experienceChartData = ref<number[]>([]);
 
 // Reactive data for combat experience simulation
 const combatExperience = ref(0);
-
+const chartData = {
+    labels: Array.from({ length: experienceChartData.value.length}, (_, i) => i+ 1), 
+    datasets: [
+        {
+            label: 'Ratio Experiencia',
+            data: [0],
+            borderWidth: 2,
+            fill: true
+        }
+    ]
+}
+const chartOptions = {
+    responsive: false,
+    maintainAspectRatio: false,
+    scales: {
+        x: {
+            title: {
+                display: true,
+                text: 'Nivel'
+            }
+        },
+        y: {
+            title: {
+                display: true,
+                text: 'Experiencia'
+            }
+        }
+    },
+}
 // Hardcoded party data
 const party = ref([
     { name: 'Pikachu', experience: 1200 },
@@ -77,15 +97,25 @@ const comboGrowth = ref<LCombo>({});
 const handleGrowthSelected = async (keys: string[]) => {
     if(keys.length != 0) {
         selectedGrowth.value = keys[0] ?? undefined;       
-        if(selectedGrowth.value !== undefined && levelInput.value  > 0 && levelInput.value <= 100) {
+        if(selectedGrowth.value !== undefined && selectedGrowth.value !== '' && levelInput.value  > 0 && levelInput.value <= 100) {
             await expService.getCalculateExperience(selectedGrowth.value, levelInput.value).then((response: number) => {
                 experienceResult.value = response;
                 visibleResult.value = true;
             }).catch((error) => {
                 console.error('Error calculating experience:', error);
             });
+
+            await expService.getGraphGrowth(selectedGrowth.value).then((response: number[]) => {
+                experienceChartData.value = response;
+                chartData.labels = Array.from({ length: experienceChartData.value.length}, (_, i) => i+ 1); 
+                chartData.datasets[0].data = experienceChartData.value as number[];
+            }).catch((error) => {
+                experienceChartData.value = [];
+                console.error('Error fetching experience chart:', error);
+            }); 
         }else {
             visibleResult.value = false;
+            experienceChartData.value = [];
         }
     }  
 };
@@ -113,10 +143,7 @@ loadView();
 }
 
 .chart {
-    width: 100%;
-    height: 300px;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
+    width: 420px;
 }
 
 .party {

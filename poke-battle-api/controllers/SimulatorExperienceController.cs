@@ -21,5 +21,16 @@ namespace poke_battle_api.controllers
             return Ok(Calculator.GetExp(g, exp.level));
         }
 
+        [HttpGet("graph/{code}")]
+        public IActionResult GetGraphData(string code)
+        {
+            Growth g = Growth.Get(code);
+            if(g == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(Calculator.GetExperienceValues(g));
+        }
     }
 }
