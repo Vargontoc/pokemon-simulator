@@ -38,10 +38,10 @@ Este proyecto está bajo la licencia MIT. Consulta el archivo `LICENSE` para má
 * **Requisitos**
   - Tener instalado docker en tu sistema
 * **Pasos**
-  1 Clonar repossitorio
+  - Clonar repossitorio
      git clone https://githum.com/Vargontoc/pokemon-simulator.git
      cd pokemon-simulator
-  2 docker-compose up --build
+  - docker-compose up --build
 
 * **Acceso a la aplicación**
   http://localhost:8080
