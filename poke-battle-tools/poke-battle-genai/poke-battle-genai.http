@@ -1,0 +1,6 @@
+@poke_battle_genai_HostAddress = http://localhost:5196
+
+GET {{poke_battle_genai_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

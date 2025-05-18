@@ -19,7 +19,26 @@ services:
    - backend
   networks:
    - poke-net
-    
+ gen-ai:
+  build:
+   context: ./poke-battle-tools/poke-battle-genai
+  ports:
+   - "6000:6000"
+  depends_on:
+   - ollama
+   
+ ollama:
+  image: ollama/ollama
+  ports:
+   - "11434:11434"
+  volumes:
+   - ollama:/root/.ollama
+  entrypoint: >
+   bash -c "ollama serve & sleep 5 && ollama pull llama3 && wait"
+   
+volumes:
+ ollama:
+ 
 networks:
  poke-net:
   driver: bridge

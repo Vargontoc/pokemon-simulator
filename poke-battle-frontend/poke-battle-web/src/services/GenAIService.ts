@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const client = axios.create({
+const iaClient = axios.create({
     baseURL: 'http://localhost:5000/api',
     timeout: 5000
 });
-export default client;
+export default iaClient;

@@ -1,0 +1,12 @@
+[
+  {
+    "ContainingType": "poke_battle_genai.Controllers.IAController",
+    "Method": "ChatNNpc",
+    "RelativePath": "api/gent-ai",
+    "HttpMethod": "",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

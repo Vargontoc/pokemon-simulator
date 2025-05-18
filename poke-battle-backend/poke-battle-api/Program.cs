@@ -35,7 +35,7 @@ builder.Services.AddScoped<IMapper<TypeDto, TypeModel>, TypeMapper>();
 builder.Services.AddScoped<IMapper< MoveDto, MoveModel>, MoveMapper>();
 
 builder.Services.AddCors(options => {
-    options.AddPolicy("AllowVueDev", p => {
+    options.AddPolicy("AllowCors", p => {
         p.WithOrigins("http://localhost:5173", "http://localhost:80", "http://localhost:8080")
         
         .AllowAnyHeader()
@@ -57,6 +57,6 @@ using (var scope = app.Services.CreateScope())
 }
 Calculator.InitializeTables();
 
-    app.UseCors("AllowVueDev");
+app.UseCors("AllowCors");
 app.MapControllers();
 app.Run();
