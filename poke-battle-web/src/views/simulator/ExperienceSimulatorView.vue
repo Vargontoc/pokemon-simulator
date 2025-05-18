@@ -85,11 +85,6 @@ const chartOptions = {
     },
 }
 // Hardcoded party data
-const party = ref([
-    { name: 'Pikachu', experience: 1200 },
-    { name: 'Charizard', experience: 3400 },
-    { name: 'Bulbasaur', experience: 800 },
-]);
 
 const comboGrowth = ref<LCombo>({});
 

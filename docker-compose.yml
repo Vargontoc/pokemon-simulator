@@ -1,0 +1,25 @@
+
+services:
+ backend:
+  build:
+   context: ./
+  container_name: poke-battle-api
+  ports:
+   - "5000:5000"
+  networks:
+   - poke-net
+   
+ frontend:
+  build:
+   context: ./poke-battle-web
+  container_name: poke-battle-ui
+  ports:
+   - "8080:80"
+  depends_on:
+   - backend
+  networks:
+   - poke-net
+    
+networks:
+ poke-net:
+  driver: bridge

@@ -36,7 +36,8 @@ builder.Services.AddScoped<IMapper< MoveDto, MoveModel>, MoveMapper>();
 
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowVueDev", p => {
-        p.WithOrigins("http://localhost:5173")
+        p.WithOrigins("http://localhost:5173", "http://localhost:80", "http://localhost:8080")
+        
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();

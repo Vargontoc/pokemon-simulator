@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import LMenu from '../components/LMenu.vue';
+
 
 </script>
 
 <template>
     <div class="app-layout">
-        <LMenu  />
         <main class="content">
             <RouterView />
         </main>
