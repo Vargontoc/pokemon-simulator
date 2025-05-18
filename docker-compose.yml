@@ -2,7 +2,7 @@
 services:
  backend:
   build:
-   context: ./
+   context: ./poke-battle-backend
   container_name: poke-battle-api
   ports:
    - "5000:5000"
@@ -11,7 +11,7 @@ services:
    
  frontend:
   build:
-   context: ./poke-battle-web
+   context: ./poke-battle-frontend/poke-battle-web
   container_name: poke-battle-ui
   ports:
    - "8080:80"
