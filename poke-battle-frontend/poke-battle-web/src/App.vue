@@ -8,6 +8,7 @@
       </div>
 
       <div class="right-buttons">
+        <button class="icon-button" @click="showChat = !showChat">🤖</button>
         <button class="icon-button"  @click="toggleTheme">{{ isDark ? '🌙' : '☀️' }}</button>
       </div>
     </header>
@@ -19,15 +20,18 @@
       </main>
     </div>
   </div>
+
+  <chat-bot-view :show="showChat" />
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import LSidebar from './components/LSidebar.vue';
 import { RouterView } from 'vue-router';
+import ChatBotView from './components/ChatBotView.vue';
 const isDark = ref(false);
 const sidebarOpen = ref(false);
-
+const showChat = ref(false);
 const toggleTheme = () => {
   isDark.value = !isDark.value;
   localStorage.setItem('theme', isDark.value ? 'dark': 'light');

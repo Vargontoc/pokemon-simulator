@@ -2,11 +2,17 @@
   {
     "ContainingType": "poke_battle_genai.Controllers.IAController",
     "Method": "ChatNNpc",
-    "RelativePath": "api/gent-ai",
-    "HttpMethod": "",
+    "RelativePath": "api/gen-ai/talk",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "msg",
+        "Type": "poke_battle_genai.ModelViews.ChatBotMessage",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   }
 ]

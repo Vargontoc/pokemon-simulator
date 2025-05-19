@@ -1,7 +1,15 @@
-import axios from "axios";
+import { type AxiosInstance } from "axios";
 
-const iaClient = axios.create({
-    baseURL: 'http://localhost:5000/api',
-    timeout: 5000
-});
-export default iaClient;
+export class GenAIService {
+    private readonly http: AxiosInstance
+    constructor(http: AxiosInstance) {
+        this.http = http
+    }
+
+    async talkIA(prompt: string): Promise<any> {
+        const res = await this.http.post("/talk", {
+            prompt: prompt
+        });
+        return res.data;
+    }
+}

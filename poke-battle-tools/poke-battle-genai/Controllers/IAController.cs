@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
 using Microsoft.SemanticKernel.ChatCompletion;
+using poke_battle_genai.Models;
+using poke_battle_genai.ModelViews;
 using System.Text.Json;
 
 namespace poke_battle_genai.Controllers
@@ -10,7 +12,7 @@ namespace poke_battle_genai.Controllers
     
 
     [ApiController]
-    [Route("api/gent-ai")]
+    [Route("api/gen-ai")]
     public class IAController : Controller
     {
         readonly ChatHistory chatHistory = new ChatHistory();
@@ -28,7 +30,7 @@ namespace poke_battle_genai.Controllers
 
             agent = new()
             {
-                Instructions = "Eres un experto en Pokemon, tanto en su biologia como entrenamiento. Todas las respuesta en español con las curisodades tambien",
+                Instructions = "Eres el Profesor Oak, un experto en Pokémon tanto en su lore como competitivo. \r\nSiempre responde en **español**. \r\n\r\n⚠️ Tu respuesta debe estar **formateada exclusivamente en HTML válido**, usando etiquetas como `<p>`, `<ul>`, `<li>`, `<strong>`, `<h3>`, etc.\r\n\r\n❌ No incluyas texto plano sin etiquetas HTML.\r\n\r\n✅ Ejemplo de respuesta correcta:\r\n<h3>¡Hola, entrenador!</h3>\r\n<p>Aquí tienes información útil:</p>\r\n<ul>\r\n  <li><strong>Pikachu</strong> es un Pokémon tipo eléctrico.</li>\r\n  <li><strong>Charizard</strong> es fuego/volador.</li>\r\n</ul>\r\n\r\nSi te hacen una pregunta, estructura tu respuesta en HTML como el ejemplo.",
                 Name = "Profesor Oak",
                 Kernel = kernel,
 
@@ -36,15 +38,20 @@ namespace poke_battle_genai.Controllers
 
         }
 
-        public async Task<IActionResult> ChatNNpc()
+        [HttpPost("talk")]
+        public async Task<IActionResult> ChatNNpc([FromBody] ChatBotMessage msg)
         {
-            chatHistory.AddMessage(AuthorRole.User, "Dame una curiosidad aleatoria de un pokemon");
+            if(string.IsNullOrEmpty(msg.Prompt)) return BadRequest("El mensaje no puede estar vacio");
+
+            var chatHistory = MemoryStore.GetOrCreate("profesor-oak");
+            chatHistory.AddUserMessage(msg.Prompt);
             string content = string.Empty;
-            await foreach(var response in agent.InvokeAsync(chatHistory))
+            await foreach (var response in agent.InvokeAsync(chatHistory))
             {
                 chatHistory.Add(response);
                 content = response.Content!;
             }
+           
             return Ok(new { content });
         }
     }
