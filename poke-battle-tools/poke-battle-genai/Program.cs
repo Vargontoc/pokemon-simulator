@@ -1,4 +1,7 @@
 using Microsoft.SemanticKernel;
+using poke.battle.bridge;
+using poke.battle.genai.Models;
+using poke.battle.genai.Models.Agents;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -18,7 +21,35 @@ builder.Services.AddCors(opt =>
     });
 });
 
+// IA Container 
+builder.Services.AddSingleton<ChatMemory>();
+builder.Services.AddSingleton<Kernel>(sp =>
+{
+    var kernel = Kernel.CreateBuilder();
+    kernel.AddOpenAIChatCompletion(modelId: "llama3", apiKey: "ollama", endpoint: new("http://localhost:11434/v1"));
+    return kernel.Build();
+});
 
+// Agent CRUD
+builder.Services.AddSingleton<AgentTranslator>();
+builder.Services.AddSingleton<AgentValidator>();
+builder.Services.AddSingleton<AgentGenerator>();
+
+// Agent Battle
+builder.Services.AddScoped<IBattleContextFormatter, SimpleBattleContextFormatter>();
+builder.Services.AddScoped<IBattleAgent, AgentBattle>();
+builder.Services.AddSingleton<AgentNarrator>();
+builder.Services.AddSingleton<AgentStrategy>();
+
+// Agent Chat
+
+builder.Services.AddSingleton<IAgentRouter, AgentRouter>();
+
+builder.WebHost.ConfigureKestrel(opt =>
+{
+    opt.ListenAnyIP(5072);
+    opt.ListenAnyIP(5073, lo => lo.UseHttps());
+});
 
 var app = builder.Build();
 app.UseCors("AllowCors");

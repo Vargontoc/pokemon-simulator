@@ -4,6 +4,7 @@ import LTypesManagementView from "@/views/crud/types/LTypesManagementView.vue";
 import BattleSimulatorView from "@/views/simulator/BattleSimulatorView.vue";
 import LMoveManagementView from "@/views/crud/moves/LMoveManagementView.vue";
 import ExperienceSimulatorView from "../views/simulator/ExperienceSimulatorView.vue";   
+import BattleView from "@/components/simulator/BattleView.vue";
 
 
 const routes = [
@@ -13,6 +14,7 @@ const routes = [
     { path: '/moves', component: LMoveManagementView},
     { path: '/simulator-battle', component: BattleSimulatorView},
     { path: '/simulator-experience', component: ExperienceSimulatorView},
+    { name: 'Battle', path: '/battle/:id', component: BattleView, props: true },
     
 ]
 

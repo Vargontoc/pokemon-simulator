@@ -7,6 +7,8 @@ namespace poke.battle.core
         List<PlayerAction> Actions {get; set;} = [];
         public List<BattleEvent> Events { get; } = new();
 
+
+
         public BattleTurn( BattleContext context, List<PlayerAction> actions, int turn) {
             
             _context = context;
@@ -33,49 +35,21 @@ namespace poke.battle.core
             StartTurn();
 
             var ordered = Actions.OrderByDescending(a => a.Priority).ThenByDescending(a => a.Actor.GetStat(Stat.Spd).ModValue);
+
+
             foreach(var action in ordered)
             {
                 if(action.Actor.IsFainted || action.Actor.Flinched) continue;
 
-                if(action is SwtichAction sa) {
 
-                    var result = sa.Execute(null!);
-                    Events.AddRange(result.Events);
-                    _context.SwitchActive(sa.Actor, sa.Target);
+                if(action is SwtichAction sa) 
+                {
+                    ProcessSwitchAction(sa);
                 }
 
                 if(action is MoveAction ma) 
                 {
-                    var result = new ActionResult();
-                    try {
-                   ma.Actor.CanAct(result);
-
-                    var targets = _context.GetOpponents(action.Actor);
-                    var opponent = _context.Type switch
-                    {
-                        BattleType.Single => targets.First(),
-                        BattleType.Double => targets.OrderBy(x => Guid.NewGuid()).First(),
-                        _ => throw new NotSupportedException("Formato no soportado")
-                    };
-
-                    result = action.Execute(opponent);
-
-                    if(opponent.IsFainted) 
-                    {
-                        opponent.ResetBattleStats();
-                        Switch(opponent);
-                    }
-
-                    if(ma.Actor.IsFainted) 
-                    {
-                        ma.Actor.ResetBattleStats();
-                        Switch(ma.Actor);
-                    }
-
-                    }catch(BattlerInterruptedException){
-    
-                    }
-                    Events.AddRange(result.Events);
+                    ProcessMoveAction(ma);
                 }
             }
 
@@ -97,9 +71,40 @@ namespace poke.battle.core
             }else { 
                 Events.Add(new(){ Type = "out-of-pokemon", Message = "Equipo derrotado"});
             }
-
-            
         }
+
+        private void ProcessSwitchAction(SwtichAction action)
+        {
+
+            var result = action.Execute(null!);
+            Events.AddRange(result.Events);
+            _context.SwitchActive(action.Actor, action.Target);
+        }
+
+        private void ProcessMoveAction(MoveAction ma)
+        {
+            var result = new ActionResult();
+
+                ma.Actor.CanAct(result);
+
+                var targets = _context.GetOpponents(ma.Actor);
+                var opponent = _context.Type switch
+                {
+                    BattleType.Single => targets.First(),
+                    BattleType.Double => targets.OrderBy(x => _context.RNG.Next()).First(),
+                    _ => throw new NotSupportedException("Formato no soportado")
+                };
+
+                result = ma.Execute(opponent);
+                Events.AddRange(result.Events);
+                
+                if(!ma.Actor.IsPlayer && ma.Actor.IsFainted)
+                    Switch(ma.Actor);
+
+               
+        }
+
+
         private void EndTurn()
         {
             _context.Playerside.TickEffects();

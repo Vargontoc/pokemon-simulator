@@ -39,7 +39,7 @@ namespace poke.battle.core {
             var result = new ActionResult();
             if(Move.IsDisabled)
             {
-                AddEvent(result, "fail", $"{Move.Move.DisplayName} está deshabilitado.");
+                AddEvent(result, "fail", $"Movimiento {Move.GetName()} está deshabilitado.");
                 return result;
             }
 
@@ -48,18 +48,18 @@ namespace poke.battle.core {
                 var copied = Actor.LastMoveReceived;
                 if(copied == null)
                 {
-                    AddEvent(result, "fail", $"{Actor.Nickname} intentó copiar un movimiento");
+                    AddEvent(result, "fail", $"{Actor.GetName()} intentó copiar un movimiento");
                     return result;
                 }
 
-                AddEvent(result, "mirror-wave", $"{Actor.Nickname} usó Manto Espejo.");
+                AddEvent(result, "mirror-wave", $"{Actor.GetName()} usó Manto Espejo.");
                 var mirror = new MoveAction { Actor = Actor,  Context = Context, Move = new PBattleMove(copied) };
                 return mirror.Execute(opponent);
             }
 
 
             if(Move.CurrentPP == 0 || Move.IsDisabled) {
-                AddEvent(result, "fail", $"{Actor.Nickname} no pudo usar {Move.Move.DisplayName}");
+                AddEvent(result, "fail", $"{Actor.GetName()} no pudo usar {Move.GetName()}");
                 return result;
             }
 
@@ -76,14 +76,14 @@ namespace poke.battle.core {
             // Movimiento normal
             if(!BattleMath.ApplyAccuracy(Actor, opponent, Move.Move.Accuracy))
             {
-                AddEvent(result, "miss", $"{Actor.Nickname} falló el golpe.");
+                AddEvent(result, "miss", $"{Actor.GetName()} falló el golpe.");
                 Move.Use();
                 return result;
             }
 
             if(Context.GetSide(opponent).HasEffect("protect"))
             {
-                AddEvent(result, "protect-blocked", $"{opponent.Nickname} se protegió del ataque.");
+                AddEvent(result, "protect-blocked", $"{opponent.GetName()} se protegió del ataque.");
                 return result;
             }
    
@@ -96,7 +96,7 @@ namespace poke.battle.core {
             {
                 BattleEffectEngine.ApplyMoveEffect(Move, Actor, opponent, Context, result);
             }else {
-                AddEvent(result, "faint", $"{opponent.Nickname} se ha debilitado.");
+                AddEvent(result, "faint", $"{opponent.GetName()} se ha debilitado.");
             }
 
 
@@ -111,7 +111,7 @@ namespace poke.battle.core {
                 _ => RollHits()
             };
 
-            AddEvent(result, "multihit-start", $"{Actor.Nickname} atacó {hits} veces.");
+            AddEvent(result, "multihit-start", $"{Actor.GetName()} atacó {hits} veces.");
             Move.Use();
             target.LastMoveReceived = Move.Move;
             for(int i = 0; i < hits; i++) {
@@ -120,13 +120,13 @@ namespace poke.battle.core {
 
                 if (Context.GetSide(target).HasEffect("protect"))
                 {
-                    AddEvent(result, "protect-blocked", $"{target.Nickname} se protegió del ataque.");
+                    AddEvent(result, "protect-blocked", $"{target.GetName()} se protegió del ataque.");
                     break;
                 }
 
-                if (BattleMath.ApplyAccuracy(Actor, target, Move.Move.Accuracy))
+                if (!BattleMath.ApplyAccuracy(Actor, target, Move.Move.Accuracy))
                 {
-                    AddEvent(result, "miss", $"{Actor.Nickname} falló el golpe.");
+                    AddEvent(result, "miss", $"{Actor.GetName()} falló el {i + 1} golpe.");
                     continue;
                 }
 
@@ -141,7 +141,7 @@ namespace poke.battle.core {
             int damage = DamageCalculator.Calculate(Actor, target, Move.Move,Context, out effectiveness, out isCritic);
             target.TakeDamage(damage, Actor);
 
-            AddEvent(result, "damage", $"{Actor.Nickname} usó {label}", new { Damage = damage, Move = Move.Move.Name});
+            AddEvent(result, "damage", $"{Actor.GetName()} usó {label}", new { Damage = damage, Move = Move.Move.Name});
             result.LastDamage = damage;
 
             if (Move.Move.MoveType == Models.MoveType.Physical) { 
@@ -155,7 +155,7 @@ namespace poke.battle.core {
                 AddEvent(result, "effectiveness", TypeEffectivenessResolver.GetText(effectiveness));
 
             if(target.IsFainted)
-                AddEvent(result, "faint", $"{target.Nickname} se ha debilitado.");
+                AddEvent(result, "faint", $"{target.GetName()} se ha debilitado.");
             else if(Move.Move.SecondaryEffect != null)
                 BattleEffectEngine.ApplyMoveEffect(Move, Actor, target, Context, result);
             
@@ -166,7 +166,7 @@ namespace poke.battle.core {
             var roll = new Random().NextDouble();
             if(roll < .375) return 2;
             if(roll < .75) return 3;
-            if(roll < -875) return 4;
+            if(roll < .875) return 4;
             return 5; 
         } 
 
@@ -183,7 +183,7 @@ namespace poke.battle.core {
                 result.Success = false;
                 result.Events.Add(new() {
                     Type = "fail",
-                    Message = $"{Actor.Nickname} ya está en combate."
+                    Message = $"{Actor.GetName()} ya está en combate."
                 });
                 return result;
             }
@@ -192,7 +192,7 @@ namespace poke.battle.core {
                 result.Success = false;
                 result.Events.Add(new() {
                     Type = "fail",
-                    Message = $"{Target.Nickname} no puede entrar porque está debilitado."
+                    Message = $"{Target.GetName()} no puede entrar porque está debilitado."
                 });
                 return result;
             }
@@ -212,7 +212,7 @@ namespace poke.battle.core {
 
             result.Events.Add(new() {
                     Type = "switch",
-                    Message = $"Vuelve {Actor.Nickname}. ¡Adelante {Target.Nickname}!"
+                    Message = $"Vuelve {Actor.GetName()}. ¡Adelante {Target.GetName()}!"
                 });
 
             return result;

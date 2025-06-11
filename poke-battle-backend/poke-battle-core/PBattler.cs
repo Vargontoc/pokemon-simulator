@@ -1,11 +1,14 @@
 using poke.battle.Models;
 using poke.battle.Models.Impl;
+using System.Text;
 
 namespace poke.battle.core
 {
     public class PBattler 
     {
-        public SpecieModel Specie { get; private set; } 
+        public SpecieModel Specie { get; private set; }
+        public string Id  => Guid.NewGuid().ToString();
+        public string Name => Specie.Name ?? "Unknown";
         /// <summary>
         /// Obtiene o establece el nivel del Battler
         /// </summary>
@@ -18,6 +21,7 @@ namespace poke.battle.core
         /// Obtiene si es un huevo
         /// </summary>
         public bool IsEgg { get; private set; } = false;
+        public bool IsPlayer { get; private set; } = true;
         /// <summary>
         /// Obtiene la naturaleza del Battler
         /// </summary>
@@ -45,6 +49,7 @@ namespace poke.battle.core
         public bool IsFainted { get { return CurrentHp <= 0; }}
         public int Critical {get; set; } = 0;
         public bool IsActive {get; set; } = false;
+        public bool WasInBattle { get; set; } = false;
         public bool HasActed { get; set;} = false;
         public bool Flinched {get; set; } = false;
         public bool Protected { get; set; } = false; 
@@ -66,9 +71,11 @@ namespace poke.battle.core
         public PBattler? BideLastAttacker { get; set; } = null;
         public bool IsChargingMove { get; set; } = false;
         public bool IsRecharging { get; set; } = false;
-        public PBattler(SpecieModel specie, int level, bool isEgg = false)
+
+        public PBattler(SpecieModel specie, int level, bool isPlayer = true,  bool isEgg = false)
         {
             this.Specie = specie;
+            this.IsPlayer = isPlayer;
             this.Level = level;    
             this.Nickname = specie.DisplayName ?? specie.Name;
             this.IsEgg = isEgg;
@@ -100,7 +107,7 @@ namespace poke.battle.core
 
             result.Events.Add(new() {
                 Type = "status",
-                Message = $"{Nickname} está ahora {Status.Name.ToLower()}"
+                Message = $"{GetName()} está ahora {Status.Name.ToLower()}"
             });
             
         }
@@ -111,7 +118,7 @@ namespace poke.battle.core
             TrappedBy = source;
             result.Events.Add(new(){
                 Type = "trap-start",
-                Message = $"{Nickname} quedó atrapado por {source.Nickname}"
+                Message = $"{GetName()} quedó atrapado por {source.Nickname}"
             });
 
         }
@@ -124,7 +131,7 @@ namespace poke.battle.core
 
                 result.Events.Add(new () {
                     Type = "leech-seed",
-                    Message = $"{Nickname} fue afectado por drenadoras"
+                    Message = $"{GetName()} fue afectado por drenadoras"
                 });
             }
 
@@ -141,7 +148,7 @@ namespace poke.battle.core
                 if(TrapCounter == 0) {
                     result.Events.Add(new() {
                         Type = "trap-end",
-                        Message = $"{Nickname} se liberó."
+                        Message = $"{GetName()} se liberó."
                     });
                     TrappedBy = null;
                 }
@@ -157,7 +164,7 @@ namespace poke.battle.core
             {
                 result.Events.Add(new() {
                     Type = "status-end",
-                    Message = $"{Nickname} ya no está confuso"
+                    Message = $"{GetName()} ya no está confuso"
                 });
 
                 return;
@@ -174,13 +181,13 @@ namespace poke.battle.core
                 CurrentHp = Math.Max(0, CurrentHp - damage);
                 result.Events.Add(new() {
                     Type = "confused-hit",
-                    Message = $"{Nickname} está confundido y se golpeó así mismo"
+                    Message = $"{GetName()} está confundido y se golpeó así mismo"
                 });
 
                 if(CurrentHp == 0) {
                     result.Events.Add(new () {
                         Type = "faint",
-                        Message = $"{Nickname} se ha debilitado."
+                        Message = $"{GetName()} se ha debilitado."
                     });
                 }
 
@@ -195,7 +202,7 @@ namespace poke.battle.core
                 ConfusionTurns = new Random().Next(2, 6);
                 result.Events.Add(new() {
                     Type = "status",
-                    Message = $"{Nickname} está confuso"
+                    Message = $"{GetName()} está confuso"
                 });
             }
         }
@@ -203,19 +210,19 @@ namespace poke.battle.core
         public void CanAct(ActionResult result) 
         {
             if(IsFainted)
-                throw new BattlerInterruptedException($"{Nickname} está debilitado");
+                throw new BattlerInterruptedException($"{GetName()} está debilitado");
 
             if (Flinched)
-                throw new BattlerInterruptedException($"¡{Nickname} retrocedió!");
+                throw new BattlerInterruptedException($"¡{GetName()} retrocedió!");
 
             if (IsRecharging)
-                throw new BattlerInterruptedException($"{Nickname} está recargando.");
+                throw new BattlerInterruptedException($"{GetName()} está recargando.");
 
             if (IsBiding)
-                throw new BattlerInterruptedException($"{Nickname} está acumulando energía.");
+                throw new BattlerInterruptedException($"{GetName()} está acumulando energía.");
 
             if (IsChargingMove)
-                throw new BattlerInterruptedException($"{Nickname} está cargando un movimiento.");
+                throw new BattlerInterruptedException($"{GetName()} está cargando un movimiento.");
 
            
 
@@ -261,16 +268,16 @@ namespace poke.battle.core
                 result.Events.Add(new() {
                     Type = "stat-up",
                     Message = !changed 
-                    ? $"{Nickname} no pudo aumentar su {stat.Name}." 
-                    :  $"{Nickname} aumentó{intensity} su {stat.Name}."
+                    ? $"{GetName()} no pudo aumentar su {stat.Name}." 
+                    :  $"{GetName()} aumentó{intensity} su {stat.Name}."
                 });
             }else 
             {
                 result.Events.Add(new() {
                     Type = "stat-down",
                     Message = !changed 
-                    ? $"{stat.Name} de {Nickname} no bajó" 
-                    :  $"{stat.Name} de{ Nickname} bajó{intensity}"
+                    ? $"{stat.Name} de {GetName()} no bajó" 
+                    :  $"{stat.Name} de{ GetName()} bajó{intensity}"
                 });
             }
 
@@ -300,16 +307,16 @@ namespace poke.battle.core
                 result.Events.Add(new() {
                     Type = $"{modType}-up",
                     Message = !changed 
-                    ? $"{Nickname} no pudo aumentar su {modText}." 
-                    :  $"La {modText} de {Nickname} subió{intensity}."
+                    ? $"{GetName()} no pudo aumentar su {modText}." 
+                    :  $"La {modText} de {GetName()} subió{intensity}."
                 });
             }else 
             {
                 result.Events.Add(new() {
                     Type = $"{modType}-down",
                     Message = !changed 
-                    ? $"La {modText} de {Nickname} no bajó." 
-                    :  $"La {modText} de{ Nickname} bajó{intensity}"
+                    ? $"La {modText} de {GetName()} no bajó." 
+                    :  $"La {modText} de{ GetName()} bajó{intensity}"
                 });
             }
         }
@@ -366,7 +373,7 @@ namespace poke.battle.core
                 result.Events.Add(new()
                 {
                     Type = "faint",
-                    Message = $"{Nickname} se debilitó."
+                    Message = $"{GetName()} se debilitó."
                 });
             }
 
@@ -380,7 +387,7 @@ namespace poke.battle.core
                 result.Events.Add(new()
                 {
                     Type = "leech-damage",
-                    Message = $"{Nickname} sufre el efecto de Drenadoras.",
+                    Message = $"{GetName()} sufre el efecto de Drenadoras.",
                     PayLoad = new { Damage = damage }
                 });
 
@@ -454,7 +461,7 @@ namespace poke.battle.core
 
                 result.Events.Add(new(){
                     Type = "trap-damage",
-                    Message = $"{Nickname} sufre daño por el atrapamiento",
+                    Message = $"{GetName()} sufre daño por el atrapamiento",
                     PayLoad = new { Damage = trap }
                 });
             }
@@ -534,6 +541,40 @@ namespace poke.battle.core
             BideTurns = Random.Shared.Next(2, 4);
             BideDamage = 0;
             BideLastAttacker = null;
+        }
+
+        public string GetName()
+        {
+            return string.IsNullOrEmpty(Nickname) ? Specie.DisplayName : Nickname;
+        }
+
+        public string GetBattlerInfo()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"Battler ID: {Id}");
+            sb.AppendLine($"Specie: {Name}");
+            sb.AppendLine($"Level: {Level}");
+            sb.AppendLine($"Is Egg: {IsEgg}");
+            sb.AppendLine($"Nature: {Nature.Name}");
+            sb.AppendLine($"Types: {string.Join(", ", Types.Select(t => t.Name))}");
+            sb.AppendLine($"Status: {Status.Name}");
+            sb.AppendLine($"Current HP: {CurrentHp}/{MaxHP}");
+            sb.AppendLine($"Stats: {string.Join(", ", Stats.Select(s => $"{s.Stat.Name}: {s.RawValue} (Base: {s.BaseValue}, Mod: {s.Modifier})"))}");
+            sb.AppendLine($"Moves: {string.Join(", ", Moves.Select(m => $"{m.Move.Name} (PP: {m.CurrentPP}/{m.Move.PP})"))}");
+            sb.AppendLine($"Mods: {string.Join(", ", Mods.Select(m => $"{m.Key}: {m.Value}"))}");
+            sb.AppendLine($"Is Active: {IsActive}");
+            sb.AppendLine($"Has Acted: {HasActed}");
+            sb.AppendLine($"Flinched: {Flinched}");
+            sb.AppendLine($"Protected: {Protected}");
+            sb.AppendLine($"Is Fainted: {IsFainted}");
+            sb.AppendLine($"Critical: {Critical}");
+            sb.AppendLine($"Is Confused: {IsConfused}");
+            sb.AppendLine($"Confusion Turns: {ConfusionTurns}");
+            sb.AppendLine($"Is Trapped: {IsTrapped}");
+            sb.AppendLine($"Trap Counter: {TrapCounter}");
+            sb.AppendLine($"Trapped By: {(TrappedBy != null ? TrappedBy.Nickname : "None")}");
+
+            return sb.ToString();
         }
     }    
 }

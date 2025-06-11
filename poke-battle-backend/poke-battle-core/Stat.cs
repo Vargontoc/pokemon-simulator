@@ -16,17 +16,20 @@ namespace poke.battle.core
         /// Obtiene el códdigo interno del stat
         /// </summary>
         public string Code { get; private set; }
-        Stat(String code, string name, string abbr) {
+        public byte Index { get; private set; }
+        Stat(String code, string name, string abbr, byte index = 0)
+        {
             this.Code = code;
             this.Name = name;
             this.Abbr = abbr;
+            Index = index;
         }
-        public static readonly Stat Hp = new("hp", "PS", "PS");
-        public static readonly Stat Attk = new("atk","Ataque", "At.");
-        public static readonly Stat Def = new("def","Defensa", "Def.");
-        public static readonly Stat AtkSp = new("SpAtk","Ataque Especial", "At.Esp.");
-        public static readonly Stat DefSp = new("SpDef","Defensa Especial", "Def. Esp.");
-        public static readonly Stat Spd = new("spd","Velocidad", "Vel.");
+        public static readonly Stat Hp = new("hp", "PS", "PS", 0);
+        public static readonly Stat Attk = new("atk","Ataque", "At.", 1);
+        public static readonly Stat Def = new("def","Defensa", "Def.", 2);
+        public static readonly Stat AtkSp = new("SpAtk","Ataque Especial", "At.Esp.", 3);
+        public static readonly Stat DefSp = new("SpDef","Defensa Especial", "Def. Esp.", 4);
+        public static readonly Stat Spd = new("spd","Velocidad", "Vel.", 5);
         
     public static IEnumerable<Stat> GetValues() {
         yield return Hp;
@@ -37,23 +40,23 @@ namespace poke.battle.core
         yield return Spd;
     }
 
-        public override bool Equals(object? obj)
-        {
+    public override bool Equals(object? obj)
+    {
 
-            if (obj == null || GetType() != obj.GetType())
-            {
-                return false;
-            }
+        if (obj == null || GetType() != obj.GetType())
+        {
+            return false;
+        }
             
-            var s = (Stat)obj;
-            return s.Name.Equals(s.Name);
-        }
+        var s = (Stat)obj;
+        return s.Name.Equals(s.Name);
+    }
         
-        public override int GetHashCode()
-        {
+    public override int GetHashCode()
+    {
 
-            return Name.GetHashCode();
-        }
+        return Name.GetHashCode();
+    }
 
     }
 }

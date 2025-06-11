@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("poke-battle-genai")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+37ae06429da9683d33e370b943e3fe97125c7652")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a8d338f521b18c1a8a9e25e98592ca076f78f694")]
 [assembly: System.Reflection.AssemblyProductAttribute("poke-battle-genai")]
 [assembly: System.Reflection.AssemblyTitleAttribute("poke-battle-genai")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

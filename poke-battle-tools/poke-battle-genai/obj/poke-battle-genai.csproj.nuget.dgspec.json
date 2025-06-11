@@ -56,19 +56,27 @@
             },
             "Microsoft.SemanticKernel": {
               "target": "Package",
-              "version": "[1.51.0, )"
+              "version": "[1.54.0, )"
             },
             "Microsoft.SemanticKernel.Agents.Core": {
               "target": "Package",
-              "version": "[1.51.0, )"
+              "version": "[1.54.0, )"
             },
             "Microsoft.SemanticKernel.Connectors.Ollama": {
               "target": "Package",
               "version": "[1.51.0-alpha, )"
             },
+            "Microsoft.SemanticKernel.Connectors.OpenAI": {
+              "target": "Package",
+              "version": "[1.54.0, )"
+            },
             "Microsoft.SemanticKernel.Core": {
               "target": "Package",
-              "version": "[1.51.0, )"
+              "version": "[1.54.0, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[9.0.5, )"
             }
           },
           "imports": [

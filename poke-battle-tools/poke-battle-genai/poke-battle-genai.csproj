@@ -4,15 +4,26 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>poke_battle_genai</RootNamespace>
+    <RootNamespace>poke.battle.genai</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
-    <PackageReference Include="Microsoft.SemanticKernel" Version="1.51.0" />
-    <PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.51.0" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="1.54.0" />
+    <PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.54.0" />
     <PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.51.0-alpha" />
-    <PackageReference Include="Microsoft.SemanticKernel.Core" Version="1.51.0" />
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.OpenAI" Version="1.54.0" />
+    <PackageReference Include="Microsoft.SemanticKernel.Core" Version="1.54.0" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="poke-battle-bridge">
+      <HintPath>..\..\poke-battle-backend\poke-battle-bridge\bin\Debug\net9.0\poke-battle-bridge.dll</HintPath>
+    </Reference>
+    <Reference Include="poke-battle-core">
+      <HintPath>..\..\poke-battle-backend\poke-battle-bridge\bin\Debug\net9.0\poke-battle-core.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

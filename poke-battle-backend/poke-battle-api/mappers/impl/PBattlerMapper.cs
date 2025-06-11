@@ -1,7 +1,6 @@
 ﻿using poke.battle.core;
 using poke.battle.infraestructure.repositories.impl;
 using poke.battle.Models.Impl;
-using poke.battle.services;
 using poke.battle.services.impl;
 using poke_battle_api.dtos;
 
@@ -19,11 +18,11 @@ namespace poke_battle_api.mappers.impl
                 Level = battler.Level,
                 Moves = battler.Moves.Select(x => x.Move.Name).ToArray(),
                 Types = mapper.convertToFront(battler.Types).ToArray(),
-                Stats = convertStats(battler.Stats)
+                Stats = ConvertStats(battler.Stats)
             };
         }
 
-        private static object[] convertStats(StatEntry[] stats)
+        private static object[] ConvertStats(StatEntry[] stats)
         {
             return stats.Select(x => new { 
                 type  = x.Stat.Code,

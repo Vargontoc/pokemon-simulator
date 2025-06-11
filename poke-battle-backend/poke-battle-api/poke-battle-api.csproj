@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\poke-battle-bridge\poke-battle-bridge.csproj" />
     <ProjectReference Include="..\poke-battle-models\poke-battle-models.csproj" />
     <ProjectReference Include="..\poke-battle-services\poke-battle-services.csproj" />
     <ProjectReference Include="..\poke-battle-infraestructure\poke-battle-infraestructure.csproj" />

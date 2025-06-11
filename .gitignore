@@ -1,1 +1,70 @@
 .vs/
+
+# ========================================
+# Global ignores
+# ========================================
+*.log
+*.tmp
+*.swp
+*.DS_Store
+Thumbs.db
+
+# ========================================
+# Backend - poke-battle-backend (C#, .NET)
+# ========================================
+poke-battle-backend/.vs/
+poke-battle-backend/**/bin/
+poke-battle-backend/**/obj/
+poke-battle-backend/**/.vs/
+poke-battle-backend/**/*.user
+poke-battle-backend/**/*.suo
+poke-battle-backend/**/*.userosscache
+poke-battle-backend/**/*.sln.docstates
+poke-battle-backend/**/artifacts/
+poke-battle-backend/**/wwwroot/lib/
+poke-battle-backend/**/wwwroot/dist/
+poke-battle-backend/**/packages/
+poke-battle-backend/**/*.nupkg
+poke-battle-backend/**/*.snupkg
+poke-battle-backend/**/*.nuspec
+poke-battle-backend/**/*.dbmdl
+poke-battle-backend/**/*.db
+poke-battle-backend/**/*.bak
+poke-battle-backend/**/*.sql
+poke-battle-backend/**/.idea/
+poke-battle-backend/**/.vscode/
+
+# ========================================
+# Frontend - poke-battle-frontend (Vue.js)
+# ========================================
+poke-battle-frontend/**/node_modules/
+poke-battle-frontend/**/dist/
+poke-battle-frontend/**/.env
+poke-battle-frontend/**/.env.*
+poke-battle-frontend/**/.cache/
+poke-battle-frontend/**/.vite/
+poke-battle-frontend/**/coverage/
+poke-battle-frontend/**/*.log
+
+# ========================================
+# Tools - poke-battle-tools (AI + misc)
+# ========================================
+poke-battle-tools/**/bin/
+poke-battle-tools/**/obj/
+poke-battle-tools/**/.vs/
+poke-battle-tools/**/packages/
+poke-battle-tools/**/node_modules/
+poke-battle-tools/**/dist/
+poke-battle-tools/**/.env
+poke-battle-tools/**/.env.*
+
+# Optional: Ignore all logs and compiled files recursively
+**/*.log
+**/*.dll
+**/*.exe
+**/*.pdb
+**/*.cache
+
+# Optional: IDE/editor configs
+**/.vscode/
+**/.idea/

@@ -9,10 +9,14 @@
       "poke-battle-genai/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.OpenApi": "9.0.5",
-          "Microsoft.SemanticKernel": "1.51.0",
-          "Microsoft.SemanticKernel.Agents.Core": "1.51.0",
+          "Microsoft.SemanticKernel": "1.54.0",
+          "Microsoft.SemanticKernel.Agents.Core": "1.54.0",
           "Microsoft.SemanticKernel.Connectors.Ollama": "1.51.0-alpha",
-          "Microsoft.SemanticKernel.Core": "1.51.0"
+          "Microsoft.SemanticKernel.Connectors.OpenAI": "1.54.0",
+          "Microsoft.SemanticKernel.Core": "1.54.0",
+          "System.Drawing.Common": "9.0.5",
+          "poke-battle-bridge": "1.0.0.0",
+          "poke-battle-core": "1.0.0.0"
         },
         "runtime": {
           "poke-battle-genai.dll": {}
@@ -36,7 +40,7 @@
           "Microsoft.Bcl.AsyncInterfaces": "9.0.0",
           "System.ClientModel": "1.4.0-beta.1",
           "System.Diagnostics.DiagnosticSource": "9.0.5",
-          "System.Memory.Data": "6.0.1",
+          "System.Memory.Data": "9.0.5",
           "System.Numerics.Vectors": "4.5.0",
           "System.Text.Encodings.Web": "6.0.0",
           "System.Text.Json": "9.0.5",
@@ -76,9 +80,9 @@
           }
         }
       },
-      "Microsoft.Extensions.AI/9.5.0-preview.1.25262.9": {
+      "Microsoft.Extensions.AI/9.5.0": {
         "dependencies": {
-          "Microsoft.Extensions.AI.Abstractions": "9.5.0-preview.1.25262.9",
+          "Microsoft.Extensions.AI.Abstractions": "9.5.0",
           "Microsoft.Extensions.Caching.Abstractions": "9.0.5",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.5",
           "Microsoft.Extensions.Logging.Abstractions": "9.0.5",
@@ -89,15 +93,29 @@
         "runtime": {
           "lib/net9.0/Microsoft.Extensions.AI.dll": {
             "assemblyVersion": "9.5.0.0",
-            "fileVersion": "9.500.25.26209"
+            "fileVersion": "9.500.25.26507"
           }
         }
       },
-      "Microsoft.Extensions.AI.Abstractions/9.5.0-preview.1.25262.9": {
+      "Microsoft.Extensions.AI.Abstractions/9.5.0": {
         "runtime": {
           "lib/net9.0/Microsoft.Extensions.AI.Abstractions.dll": {
             "assemblyVersion": "9.5.0.0",
-            "fileVersion": "9.500.25.26209"
+            "fileVersion": "9.500.25.26507"
+          }
+        }
+      },
+      "Microsoft.Extensions.AI.OpenAI/9.5.0-preview.1.25265.7": {
+        "dependencies": {
+          "Microsoft.Extensions.AI.Abstractions": "9.5.0",
+          "OpenAI": "2.2.0-beta.4",
+          "System.Memory.Data": "9.0.5",
+          "System.Text.Json": "9.0.5"
+        },
+        "runtime": {
+          "lib/net9.0/Microsoft.Extensions.AI.OpenAI.dll": {
+            "assemblyVersion": "9.5.0.0",
+            "fileVersion": "9.500.25.26507"
           }
         }
       },
@@ -144,9 +162,9 @@
           }
         }
       },
-      "Microsoft.Extensions.VectorData.Abstractions/9.0.0-preview.1.25229.1": {
+      "Microsoft.Extensions.VectorData.Abstractions/9.5.0": {
         "dependencies": {
-          "Microsoft.Extensions.AI.Abstractions": "9.5.0-preview.1.25262.9"
+          "Microsoft.Extensions.AI.Abstractions": "9.5.0"
         },
         "runtime": {
           "lib/net8.0/Microsoft.Extensions.VectorData.Abstractions.dll": {
@@ -164,81 +182,75 @@
           }
         }
       },
-      "Microsoft.SemanticKernel/1.51.0": {
+      "Microsoft.SemanticKernel/1.54.0": {
         "dependencies": {
-          "Microsoft.SemanticKernel.Connectors.AzureOpenAI": "1.51.0",
-          "Microsoft.SemanticKernel.Core": "1.51.0"
+          "Microsoft.SemanticKernel.Connectors.AzureOpenAI": "1.54.0",
+          "Microsoft.SemanticKernel.Core": "1.54.0"
         },
         "runtime": {
           "lib/net8.0/Microsoft.SemanticKernel.dll": {
-            "assemblyVersion": "1.51.0.0",
-            "fileVersion": "1.51.0.0"
+            "assemblyVersion": "1.54.0.0",
+            "fileVersion": "1.54.0.0"
           }
         }
       },
-      "Microsoft.SemanticKernel.Abstractions/1.51.0": {
+      "Microsoft.SemanticKernel.Abstractions/1.54.0": {
         "dependencies": {
-          "Microsoft.Bcl.AsyncInterfaces": "9.0.0",
           "Microsoft.Bcl.HashCode": "1.1.1",
-          "Microsoft.Extensions.AI.Abstractions": "9.5.0-preview.1.25262.9",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.5",
-          "Microsoft.Extensions.Logging.Abstractions": "9.0.5",
-          "Microsoft.Extensions.VectorData.Abstractions": "9.0.0-preview.1.25229.1",
-          "System.Diagnostics.DiagnosticSource": "9.0.5",
-          "System.Text.Json": "9.0.5"
+          "Microsoft.Extensions.AI": "9.5.0",
+          "Microsoft.Extensions.VectorData.Abstractions": "9.5.0"
         },
         "runtime": {
           "lib/net8.0/Microsoft.SemanticKernel.Abstractions.dll": {
-            "assemblyVersion": "1.51.0.0",
-            "fileVersion": "1.51.0.0"
+            "assemblyVersion": "1.54.0.0",
+            "fileVersion": "1.54.0.0"
           }
         }
       },
-      "Microsoft.SemanticKernel.Agents.Abstractions/1.51.0": {
+      "Microsoft.SemanticKernel.Agents.Abstractions/1.54.0": {
         "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "9.0.5",
-          "Microsoft.SemanticKernel.Abstractions": "1.51.0",
+          "Microsoft.SemanticKernel.Abstractions": "1.54.0",
           "System.Linq.Async": "6.0.1",
           "System.Text.Json": "9.0.5"
         },
         "runtime": {
           "lib/net8.0/Microsoft.SemanticKernel.Agents.Abstractions.dll": {
-            "assemblyVersion": "1.51.0.0",
-            "fileVersion": "1.51.0.0"
+            "assemblyVersion": "1.54.0.0",
+            "fileVersion": "1.54.0.0"
           }
         }
       },
-      "Microsoft.SemanticKernel.Agents.Core/1.51.0": {
+      "Microsoft.SemanticKernel.Agents.Core/1.54.0": {
         "dependencies": {
-          "Microsoft.SemanticKernel.Agents.Abstractions": "1.51.0",
-          "Microsoft.SemanticKernel.Core": "1.51.0"
+          "Microsoft.SemanticKernel.Agents.Abstractions": "1.54.0",
+          "Microsoft.SemanticKernel.Core": "1.54.0"
         },
         "runtime": {
           "lib/net8.0/Microsoft.SemanticKernel.Agents.Core.dll": {
-            "assemblyVersion": "1.51.0.0",
-            "fileVersion": "1.51.0.0"
+            "assemblyVersion": "1.54.0.0",
+            "fileVersion": "1.54.0.0"
           }
         }
       },
-      "Microsoft.SemanticKernel.Connectors.AzureOpenAI/1.51.0": {
+      "Microsoft.SemanticKernel.Connectors.AzureOpenAI/1.54.0": {
         "dependencies": {
           "Azure.AI.OpenAI": "2.2.0-beta.4",
-          "Microsoft.SemanticKernel.Connectors.OpenAI": "1.51.0",
-          "Microsoft.SemanticKernel.Core": "1.51.0"
+          "Microsoft.SemanticKernel.Connectors.OpenAI": "1.54.0",
+          "Microsoft.SemanticKernel.Core": "1.54.0"
         },
         "runtime": {
           "lib/net8.0/Microsoft.SemanticKernel.Connectors.AzureOpenAI.dll": {
-            "assemblyVersion": "1.51.0.0",
-            "fileVersion": "1.51.0.0"
+            "assemblyVersion": "1.54.0.0",
+            "fileVersion": "1.54.0.0"
           }
         }
       },
       "Microsoft.SemanticKernel.Connectors.Ollama/1.51.0-alpha": {
         "dependencies": {
-          "Microsoft.Extensions.AI": "9.5.0-preview.1.25262.9",
+          "Microsoft.Extensions.AI": "9.5.0",
           "Microsoft.Net.Compilers.Toolset": "4.12.0",
-          "Microsoft.SemanticKernel.Abstractions": "1.51.0",
-          "Microsoft.SemanticKernel.Core": "1.51.0",
+          "Microsoft.SemanticKernel.Abstractions": "1.54.0",
+          "Microsoft.SemanticKernel.Core": "1.54.0",
           "OllamaSharp": "5.1.12"
         },
         "runtime": {
@@ -248,36 +260,52 @@
           }
         }
       },
-      "Microsoft.SemanticKernel.Connectors.OpenAI/1.51.0": {
+      "Microsoft.SemanticKernel.Connectors.OpenAI/1.54.0": {
         "dependencies": {
-          "Microsoft.SemanticKernel.Core": "1.51.0",
+          "Microsoft.Extensions.AI.OpenAI": "9.5.0-preview.1.25265.7",
+          "Microsoft.SemanticKernel.Core": "1.54.0",
           "OpenAI": "2.2.0-beta.4"
         },
         "runtime": {
           "lib/net8.0/Microsoft.SemanticKernel.Connectors.OpenAI.dll": {
-            "assemblyVersion": "1.51.0.0",
-            "fileVersion": "1.51.0.0"
+            "assemblyVersion": "1.54.0.0",
+            "fileVersion": "1.54.0.0"
           }
         }
       },
-      "Microsoft.SemanticKernel.Core/1.51.0": {
+      "Microsoft.SemanticKernel.Core/1.54.0": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "8.0.1",
-          "Microsoft.SemanticKernel.Abstractions": "1.51.0",
-          "System.Numerics.Tensors": "9.0.0",
-          "System.Text.Json": "9.0.5"
+          "Microsoft.SemanticKernel.Abstractions": "1.54.0",
+          "System.Numerics.Tensors": "9.0.0"
         },
         "runtime": {
           "lib/net8.0/Microsoft.SemanticKernel.Core.dll": {
-            "assemblyVersion": "1.51.0.0",
-            "fileVersion": "1.51.0.0"
+            "assemblyVersion": "1.54.0.0",
+            "fileVersion": "1.54.0.0"
+          }
+        }
+      },
+      "Microsoft.Win32.SystemEvents/9.0.5": {
+        "runtime": {
+          "lib/net9.0/Microsoft.Win32.SystemEvents.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.525.21509"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net9.0/Microsoft.Win32.SystemEvents.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.525.21509"
           }
         }
       },
       "OllamaSharp/5.1.12": {
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "9.0.0",
-          "Microsoft.Extensions.AI.Abstractions": "9.5.0-preview.1.25262.9"
+          "Microsoft.Extensions.AI.Abstractions": "9.5.0"
         },
         "runtime": {
           "lib/net9.0/OllamaSharp.dll": {
@@ -301,7 +329,7 @@
       "System.ClientModel/1.4.0-beta.1": {
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "9.0.5",
-          "System.Memory.Data": "6.0.1"
+          "System.Memory.Data": "9.0.5"
         },
         "runtime": {
           "lib/net8.0/System.ClientModel.dll": {
@@ -311,6 +339,21 @@
         }
       },
       "System.Diagnostics.DiagnosticSource/9.0.5": {},
+      "System.Drawing.Common/9.0.5": {
+        "dependencies": {
+          "Microsoft.Win32.SystemEvents": "9.0.5"
+        },
+        "runtime": {
+          "lib/net9.0/System.Drawing.Common.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.525.21601"
+          },
+          "lib/net9.0/System.Private.Windows.Core.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.525.21601"
+          }
+        }
+      },
       "System.Linq.Async/6.0.1": {
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "9.0.0"
@@ -322,11 +365,11 @@
           }
         }
       },
-      "System.Memory.Data/6.0.1": {
+      "System.Memory.Data/9.0.5": {
         "runtime": {
-          "lib/net6.0/System.Memory.Data.dll": {
-            "assemblyVersion": "6.0.0.1",
-            "fileVersion": "6.0.3624.51421"
+          "lib/net9.0/System.Memory.Data.dll": {
+            "assemblyVersion": "9.0.0.5",
+            "fileVersion": "9.0.525.21509"
           }
         }
       },
@@ -347,7 +390,31 @@
       },
       "System.Text.Json/9.0.5": {},
       "System.Threading.Channels/9.0.5": {},
-      "System.Threading.Tasks.Extensions/4.5.4": {}
+      "System.Threading.Tasks.Extensions/4.5.4": {},
+      "poke-battle-bridge/1.0.0.0": {
+        "runtime": {
+          "poke-battle-bridge.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "poke-battle-core/1.0.0.0": {
+        "runtime": {
+          "poke-battle-core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "poke-battle-models/1.0.0.0": {
+        "runtime": {
+          "poke-battle-models.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
     }
   },
   "libraries": {
@@ -391,19 +458,26 @@
       "path": "microsoft.bcl.hashcode/1.1.1",
       "hashPath": "microsoft.bcl.hashcode.1.1.1.nupkg.sha512"
     },
-    "Microsoft.Extensions.AI/9.5.0-preview.1.25262.9": {
+    "Microsoft.Extensions.AI/9.5.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-M9EHdka3wtSDbZEh7c+eo3ucs8njaZKGJFAV73gdMWYoZfrrhFPV6sa8b+9bjSDWK61tvEi8/HfU/AnVypzIPQ==",
-      "path": "microsoft.extensions.ai/9.5.0-preview.1.25262.9",
-      "hashPath": "microsoft.extensions.ai.9.5.0-preview.1.25262.9.nupkg.sha512"
+      "sha512": "sha512-RBq/TspXI7UScO5+fHXIrnlDvX8pnvFcHWag3OPPivJgjqmI/RF70dpTPmMIly9dG+z+86kLP2KGkA2UiZ9tVQ==",
+      "path": "microsoft.extensions.ai/9.5.0",
+      "hashPath": "microsoft.extensions.ai.9.5.0.nupkg.sha512"
     },
-    "Microsoft.Extensions.AI.Abstractions/9.5.0-preview.1.25262.9": {
+    "Microsoft.Extensions.AI.Abstractions/9.5.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-b1IL+YciwqRkSCL1W6B4a99Ho4Oxu7yBkp8ykUleD58/tiFgeajVL84VaichMEnt8YRLt61dh89dwJEcdy1lgg==",
-      "path": "microsoft.extensions.ai.abstractions/9.5.0-preview.1.25262.9",
-      "hashPath": "microsoft.extensions.ai.abstractions.9.5.0-preview.1.25262.9.nupkg.sha512"
+      "sha512": "sha512-Y46j1S4zOPtLAHCUzhHIm1IhCMr7764754bLYupyc1JZcvLNXjUk+VC7H3Bou20S2hHgDJnfox7X/H/3BYEvzA==",
+      "path": "microsoft.extensions.ai.abstractions/9.5.0",
+      "hashPath": "microsoft.extensions.ai.abstractions.9.5.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.AI.OpenAI/9.5.0-preview.1.25265.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-htxD19JfZekY2vJSoMJn6lkBlZLcgMm7iK0MZc8pmuVT7FfNP7o+mTS4S0ZUDdBm1YR7NzZfYYjbwFOK/Z1gKg==",
+      "path": "microsoft.extensions.ai.openai/9.5.0-preview.1.25265.7",
+      "hashPath": "microsoft.extensions.ai.openai.9.5.0-preview.1.25265.7.nupkg.sha512"
     },
     "Microsoft.Extensions.Caching.Abstractions/9.0.5": {
       "type": "package",
@@ -440,12 +514,12 @@
       "path": "microsoft.extensions.primitives/9.0.5",
       "hashPath": "microsoft.extensions.primitives.9.0.5.nupkg.sha512"
     },
-    "Microsoft.Extensions.VectorData.Abstractions/9.0.0-preview.1.25229.1": {
+    "Microsoft.Extensions.VectorData.Abstractions/9.5.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-HagzbnKODtfwnTJldgSlgdBp5UQXpRA7d4/Kx9wWdaYrk5DpHaC+5/v16ffU/zIYdTfPet4qTiES+pfQ6dzBMg==",
-      "path": "microsoft.extensions.vectordata.abstractions/9.0.0-preview.1.25229.1",
-      "hashPath": "microsoft.extensions.vectordata.abstractions.9.0.0-preview.1.25229.1.nupkg.sha512"
+      "sha512": "sha512-+hvBYS60Tp9ELEpBVOEa1qBaWgJiEzI9cZdlKf00zJULgI6oPYN/xYps4SaFvyf3O8C+WsDC3Ilsfc147nwVuQ==",
+      "path": "microsoft.extensions.vectordata.abstractions/9.5.0",
+      "hashPath": "microsoft.extensions.vectordata.abstractions.9.5.0.nupkg.sha512"
     },
     "Microsoft.Net.Compilers.Toolset/4.12.0": {
       "type": "package",
@@ -461,40 +535,40 @@
       "path": "microsoft.openapi/1.6.17",
       "hashPath": "microsoft.openapi.1.6.17.nupkg.sha512"
     },
-    "Microsoft.SemanticKernel/1.51.0": {
+    "Microsoft.SemanticKernel/1.54.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-2gQo2Wal5Fn+wVj/1ttWOsw9QcUbVnZN1bwAYVMUrRv1Wcuqy+LSfF0g9pIyZyhxHi91rI/rkAKbSLB/3KPEkw==",
-      "path": "microsoft.semantickernel/1.51.0",
-      "hashPath": "microsoft.semantickernel.1.51.0.nupkg.sha512"
+      "sha512": "sha512-mi/y6faehCeVdSaF8Fdy7j6RenGkRgp8WrY4idJmER9zfL8gEWKtVMEewZ1MrExMfO7KGfv3yg2naUkozn4pbQ==",
+      "path": "microsoft.semantickernel/1.54.0",
+      "hashPath": "microsoft.semantickernel.1.54.0.nupkg.sha512"
     },
-    "Microsoft.SemanticKernel.Abstractions/1.51.0": {
+    "Microsoft.SemanticKernel.Abstractions/1.54.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-l1kN6XsR++ZzWNesSGWWBKcq2WfdwD6RWxbtI+yRhUXHGlrMt58kehyhdvRhdp48dUuRgTlmA3+ddxZx+UWidg==",
-      "path": "microsoft.semantickernel.abstractions/1.51.0",
-      "hashPath": "microsoft.semantickernel.abstractions.1.51.0.nupkg.sha512"
+      "sha512": "sha512-HasMq5QB19wJabql8tOIHfrehU1CJLGp7xSs63KO4kGQMxo82w88VtaA1ty4uj91QO//9fK86gFQsS4D/VXViQ==",
+      "path": "microsoft.semantickernel.abstractions/1.54.0",
+      "hashPath": "microsoft.semantickernel.abstractions.1.54.0.nupkg.sha512"
     },
-    "Microsoft.SemanticKernel.Agents.Abstractions/1.51.0": {
+    "Microsoft.SemanticKernel.Agents.Abstractions/1.54.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-bRohTvlMt8QUEzt25hU2B498vEysX3dYsT01JQ2CdRtWmifIJohpeTEIAZUwBd7SrX/3/Ttf3DvKMYTLsSDdkA==",
-      "path": "microsoft.semantickernel.agents.abstractions/1.51.0",
-      "hashPath": "microsoft.semantickernel.agents.abstractions.1.51.0.nupkg.sha512"
+      "sha512": "sha512-s/+083NXBHSRaOvNdPGQ6FeRvXaKOOi2vmuVQTmy0eFXt7CfwmA0ebFWZym9UVG+v7wkboi/eEkQkDq5ruFj9g==",
+      "path": "microsoft.semantickernel.agents.abstractions/1.54.0",
+      "hashPath": "microsoft.semantickernel.agents.abstractions.1.54.0.nupkg.sha512"
     },
-    "Microsoft.SemanticKernel.Agents.Core/1.51.0": {
+    "Microsoft.SemanticKernel.Agents.Core/1.54.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-YArXkW/CxreDUtMfc4O94dRwecnWJUk8mezjqsEOdW/cv5B6wOWoDZ24Hk+5aXzYBCbsXdg6pXulUjmIUoN2PA==",
-      "path": "microsoft.semantickernel.agents.core/1.51.0",
-      "hashPath": "microsoft.semantickernel.agents.core.1.51.0.nupkg.sha512"
+      "sha512": "sha512-MYe9f504whFDbLUwixwq36LJSYFWlpa5ShhUDhfEzgHA51mkOQNk3kF9bKlEmHyayv3TAfdaT20CHTbmsXKs2w==",
+      "path": "microsoft.semantickernel.agents.core/1.54.0",
+      "hashPath": "microsoft.semantickernel.agents.core.1.54.0.nupkg.sha512"
     },
-    "Microsoft.SemanticKernel.Connectors.AzureOpenAI/1.51.0": {
+    "Microsoft.SemanticKernel.Connectors.AzureOpenAI/1.54.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-AiTjA14OOwlDGjh3rF6ritsziPLP40+koa+7jiGxdQyPetCG4/8NF3A6DUr7hR7Qqc7RizUbPwPJyryYgcLWrA==",
-      "path": "microsoft.semantickernel.connectors.azureopenai/1.51.0",
-      "hashPath": "microsoft.semantickernel.connectors.azureopenai.1.51.0.nupkg.sha512"
+      "sha512": "sha512-tEv9K1EIb3+/Tv2m2dlVDlORWET2K46197kzeBp5SkKeYn6yCTR+TaSMFx/7Ue3XlG7BoWi7f17GVJnlsQWhDQ==",
+      "path": "microsoft.semantickernel.connectors.azureopenai/1.54.0",
+      "hashPath": "microsoft.semantickernel.connectors.azureopenai.1.54.0.nupkg.sha512"
     },
     "Microsoft.SemanticKernel.Connectors.Ollama/1.51.0-alpha": {
       "type": "package",
@@ -503,19 +577,26 @@
       "path": "microsoft.semantickernel.connectors.ollama/1.51.0-alpha",
       "hashPath": "microsoft.semantickernel.connectors.ollama.1.51.0-alpha.nupkg.sha512"
     },
-    "Microsoft.SemanticKernel.Connectors.OpenAI/1.51.0": {
+    "Microsoft.SemanticKernel.Connectors.OpenAI/1.54.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-11Zu5Lmh7bd3ZZGBfxAM4GIX1MzeV1oYDS/udYj9MnBVgYdtu8a5pkFDsGVUMNXcmq6HNjfmfykHsybAu9J+kA==",
-      "path": "microsoft.semantickernel.connectors.openai/1.51.0",
-      "hashPath": "microsoft.semantickernel.connectors.openai.1.51.0.nupkg.sha512"
+      "sha512": "sha512-DHGTY3G5dMdseGpHElRYBQUfA/H9Gbn8rli07Lnw9y4pz69skiqTJ81yWPZHBALoEO5Psf2g8Z5vrMsIxryDrg==",
+      "path": "microsoft.semantickernel.connectors.openai/1.54.0",
+      "hashPath": "microsoft.semantickernel.connectors.openai.1.54.0.nupkg.sha512"
     },
-    "Microsoft.SemanticKernel.Core/1.51.0": {
+    "Microsoft.SemanticKernel.Core/1.54.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-jFIdddVbQjurzzuFGf9893MB80c3fPyly3M40WUunzEoOV2dJgx6WabfrL3gqimQIlvcKxwkaB/apJUhIF+3Vg==",
-      "path": "microsoft.semantickernel.core/1.51.0",
-      "hashPath": "microsoft.semantickernel.core.1.51.0.nupkg.sha512"
+      "sha512": "sha512-Wvpu6u2j0Q4hWl9T7CG4uhWnEbj8WfoDl1TA42pcUdE49v7xhw3EvWagb2KcV5j+Hho3E+eW38pGinZLThDhTg==",
+      "path": "microsoft.semantickernel.core/1.54.0",
+      "hashPath": "microsoft.semantickernel.core.1.54.0.nupkg.sha512"
+    },
+    "Microsoft.Win32.SystemEvents/9.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-D4OYNpmvAsF9MkaY2W8Jue2XuNHDhygvwzo019hs+lP85KaVnOlXmqsjDKr1dHb1DPxDnOKpe6mAgJN7S6ttwg==",
+      "path": "microsoft.win32.systemevents/9.0.5",
+      "hashPath": "microsoft.win32.systemevents.9.0.5.nupkg.sha512"
     },
     "OllamaSharp/5.1.12": {
       "type": "package",
@@ -545,6 +626,13 @@
       "path": "system.diagnostics.diagnosticsource/9.0.5",
       "hashPath": "system.diagnostics.diagnosticsource.9.0.5.nupkg.sha512"
     },
+    "System.Drawing.Common/9.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-T/6nqx0B7/uTe5JjBwrKZilLuwfhHLOVmNKlT/wr4A9Dna94mgTdz3lTfrdJ72QRx7IHCv/LzoJPmFSfK/N6WA==",
+      "path": "system.drawing.common/9.0.5",
+      "hashPath": "system.drawing.common.9.0.5.nupkg.sha512"
+    },
     "System.Linq.Async/6.0.1": {
       "type": "package",
       "serviceable": true,
@@ -552,12 +640,12 @@
       "path": "system.linq.async/6.0.1",
       "hashPath": "system.linq.async.6.0.1.nupkg.sha512"
     },
-    "System.Memory.Data/6.0.1": {
+    "System.Memory.Data/9.0.5": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-yliDgLh9S9Mcy5hBIdZmX6yphYIW3NH+3HN1kV1m7V1e0s7LNTw/tHNjJP4U9nSMEgl3w1TzYv/KA1Tg9NYy6w==",
-      "path": "system.memory.data/6.0.1",
-      "hashPath": "system.memory.data.6.0.1.nupkg.sha512"
+      "sha512": "sha512-qK9dBegf3wdw2+mqeIXmTJjlMq4sn39wUN+JSagMuCmp/05ZyQLYIZsxlCopChxcgRwqu/+tHXKRaKtzHYlITw==",
+      "path": "system.memory.data/9.0.5",
+      "hashPath": "system.memory.data.9.0.5.nupkg.sha512"
     },
     "System.Numerics.Tensors/9.0.0": {
       "type": "package",
@@ -607,6 +695,21 @@
       "sha512": "sha512-zteT+G8xuGu6mS+mzDzYXbzS7rd3K6Fjb9RiZlYlJPam2/hU7JCBZBVEcywNuR+oZ1ncTvc/cq0faRr3P01OVg==",
       "path": "system.threading.tasks.extensions/4.5.4",
       "hashPath": "system.threading.tasks.extensions.4.5.4.nupkg.sha512"
+    },
+    "poke-battle-bridge/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "poke-battle-core/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "poke-battle-models/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

@@ -1,5 +1,10 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using poke.battle.bridge;
+using poke.battle.bridge.Builders;
+using poke.battle.bridge.Builders.Impl;
+using poke.battle.bridge.Stores;
+using poke.battle.bridge.Stores.Impl;
 using poke.battle.core;
 using poke.battle.infraestructure.repositories;
 using poke.battle.infraestructure.repositories.impl;
@@ -12,6 +17,7 @@ using poke_battle_api.mappers;
 using poke_battle_api.mappers.impl;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddHttpClient();
 builder.Services.AddControllers()
 .AddJsonOptions(options =>
     {
@@ -43,6 +49,17 @@ builder.Services.AddCors(options => {
         .AllowCredentials();
     });
 });
+
+builder.Services.AddSingleton<IBattleStore, MemoryBattleStore>();
+builder.Services.AddSingleton<IBattleContextBuilder, BattleContextBuilder>();
+builder.Services.AddSingleton<IBattleContextFormatter, SimpleBattleContextFormatter>();
+
+
+builder.WebHost.ConfigureKestrel(opt =>
+{
+    opt.ListenAnyIP(5070);
+    opt.ListenAnyIP(5071, lo => lo.UseHttps());
+});
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
@@ -56,6 +73,10 @@ using (var scope = app.Services.CreateScope())
     CoreSettings.InitCore(abs, mvs, spc);
 }
 Calculator.InitializeTables();
+
+
+
+
 
 app.UseCors("AllowCors");
 app.MapControllers();

@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "poke-battle-console", "poke
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "poke-battle-tests", "poke-battle-tests\poke-battle-tests.csproj", "{5D207983-8FEB-467E-84D1-7A91200C4E80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "poke-battle-bridge", "poke-battle-bridge\poke-battle-bridge.csproj", "{2BAB7B47-9FAC-4B58-99A0-B6F72C5D1230}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,18 @@ Global
 		{5D207983-8FEB-467E-84D1-7A91200C4E80}.Release|x64.Build.0 = Release|Any CPU
 		{5D207983-8FEB-467E-84D1-7A91200C4E80}.Release|x86.ActiveCfg = Release|Any CPU
 		{5D207983-8FEB-467E-84D1-7A91200C4E80}.Release|x86.Build.0 = Release|Any CPU
+		{2BAB7B47-9FAC-4B58-99A0-B6F72C5D1230}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BAB7B47-9FAC-4B58-99A0-B6F72C5D1230}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BAB7B47-9FAC-4B58-99A0-B6F72C5D1230}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2BAB7B47-9FAC-4B58-99A0-B6F72C5D1230}.Debug|x64.Build.0 = Debug|Any CPU
+		{2BAB7B47-9FAC-4B58-99A0-B6F72C5D1230}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2BAB7B47-9FAC-4B58-99A0-B6F72C5D1230}.Debug|x86.Build.0 = Debug|Any CPU
+		{2BAB7B47-9FAC-4B58-99A0-B6F72C5D1230}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BAB7B47-9FAC-4B58-99A0-B6F72C5D1230}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BAB7B47-9FAC-4B58-99A0-B6F72C5D1230}.Release|x64.ActiveCfg = Release|Any CPU
+		{2BAB7B47-9FAC-4B58-99A0-B6F72C5D1230}.Release|x64.Build.0 = Release|Any CPU
+		{2BAB7B47-9FAC-4B58-99A0-B6F72C5D1230}.Release|x86.ActiveCfg = Release|Any CPU
+		{2BAB7B47-9FAC-4B58-99A0-B6F72C5D1230}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

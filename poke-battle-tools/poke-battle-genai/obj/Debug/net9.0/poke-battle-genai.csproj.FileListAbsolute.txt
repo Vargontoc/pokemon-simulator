@@ -53,3 +53,14 @@ D:\Workspace\pokemon-simulator\poke-battle-tools\poke-battle-genai\bin\Debug\net
 D:\Workspace\pokemon-simulator\poke-battle-tools\poke-battle-genai\bin\Debug\net9.0\System.Linq.Async.dll
 D:\Workspace\pokemon-simulator\poke-battle-tools\poke-battle-genai\bin\Debug\net9.0\System.Memory.Data.dll
 D:\Workspace\pokemon-simulator\poke-battle-tools\poke-battle-genai\bin\Debug\net9.0\System.Numerics.Tensors.dll
+D:\Workspace\pokemon-simulator\poke-battle-tools\poke-battle-genai\bin\Debug\net9.0\Microsoft.Extensions.AI.OpenAI.dll
+D:\Workspace\pokemon-simulator\poke-battle-tools\poke-battle-genai\bin\Debug\net9.0\Microsoft.Win32.SystemEvents.dll
+D:\Workspace\pokemon-simulator\poke-battle-tools\poke-battle-genai\bin\Debug\net9.0\System.Drawing.Common.dll
+D:\Workspace\pokemon-simulator\poke-battle-tools\poke-battle-genai\bin\Debug\net9.0\System.Private.Windows.Core.dll
+D:\Workspace\pokemon-simulator\poke-battle-tools\poke-battle-genai\bin\Debug\net9.0\runtimes\win\lib\net9.0\Microsoft.Win32.SystemEvents.dll
+D:\Workspace\pokemon-simulator\poke-battle-tools\poke-battle-genai\bin\Debug\net9.0\poke-battle-bridge.dll
+D:\Workspace\pokemon-simulator\poke-battle-tools\poke-battle-genai\bin\Debug\net9.0\poke-battle-core.dll
+D:\Workspace\pokemon-simulator\poke-battle-tools\poke-battle-genai\bin\Debug\net9.0\poke-battle-models.dll
+D:\Workspace\pokemon-simulator\poke-battle-tools\poke-battle-genai\bin\Debug\net9.0\poke-battle-bridge.pdb
+D:\Workspace\pokemon-simulator\poke-battle-tools\poke-battle-genai\bin\Debug\net9.0\poke-battle-core.pdb
+D:\Workspace\pokemon-simulator\poke-battle-tools\poke-battle-genai\bin\Debug\net9.0\poke-battle-models.pdb

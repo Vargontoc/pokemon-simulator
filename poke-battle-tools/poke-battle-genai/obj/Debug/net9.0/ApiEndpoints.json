@@ -1,15 +1,67 @@
 [
   {
-    "ContainingType": "poke_battle_genai.Controllers.IAController",
-    "Method": "ChatNNpc",
-    "RelativePath": "api/gen-ai/talk",
+    "ContainingType": "poke.battle.genai.Controllers.BattleIAController",
+    "Method": "DecideAsync",
+    "RelativePath": "api/gen-ai/battle/decide",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "msg",
-        "Type": "poke_battle_genai.ModelViews.ChatBotMessage",
+        "Name": "request",
+        "Type": "poke.battle.bridge.api.BattleDecisionRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "poke.battle.bridge.api.BattleDecisionResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "poke.battle.genai.Controllers.BattleIAController",
+    "Method": "DecideTeamAsync",
+    "RelativePath": "api/gen-ai/battle/select-team",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "poke.battle.bridge.Api.TeamSelectionRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "poke.battle.bridge.api.BattleDecisionResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "poke.battle.genai.Controllers.AdminController",
+    "Method": "Translate",
+    "RelativePath": "api/gen-ai/crud/translator",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "message",
+        "Type": "poke.battle.genai.Models.ChatMessage",
         "IsRequired": true
       }
     ],

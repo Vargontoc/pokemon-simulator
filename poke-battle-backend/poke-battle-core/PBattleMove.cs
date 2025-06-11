@@ -16,6 +16,11 @@ namespace poke.battle.core
             CurrentPP = move.PP;
         }
 
+        public string GetName()
+        {
+            return Move.Name;
+        }
+
         public void Use() {
             if(CurrentPP > 0)
                 CurrentPP--;
