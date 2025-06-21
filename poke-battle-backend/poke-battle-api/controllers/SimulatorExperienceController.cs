@@ -12,14 +12,21 @@ namespace poke_battle_api.controllers
         [HttpPost("growth")]
         public IActionResult CalculateExp([FromBody] CalcExpDto exp)
         {
-            Growth g = Growth.Get(exp.code);
-            if(g == null || exp.level <= 0 || exp.level > CoreSettings.MAX_LEVEL)
+            Growth g = Growth.Get(exp.Code);
+            if(g == null || exp.Level <= 0 || exp.Level > CoreSettings.MAX_LEVEL)
             {
-                return BadRequest();
+                return Ok(0);
             }
 
-            return Ok(Calculator.GetExp(g, exp.level));
+            return Ok(Calculator.GetExp(g, exp.Level));
         }
+
+        [HttpPost("gained")]
+        public IActionResult CalculateExpGained(CalcExpDto exp)
+        {
+            return Ok(Calculator.CalculateExpGainer(exp.Level, exp.BaseExperience, exp.Participants, exp.LuckyEgg, exp.Trainer));
+        }
+
 
         [HttpGet("graph/{code}")]
         public IActionResult GetGraphData(string code)

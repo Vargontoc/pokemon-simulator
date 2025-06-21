@@ -15,18 +15,7 @@ namespace poke.battle.infraestructure.repositories.impl
 
         protected override void CreatePredicates(TypesFilter filter)
         {
-            if(!string.IsNullOrEmpty(filter.WeakTo))
-            {
-                predicates.Add(x => x.Weakness.Contains(filter.WeakTo));
-            }
-            if (!string.IsNullOrEmpty(filter.ResistenceTo))
-            {
-                predicates.Add(x => x.Resistences.Contains(filter.ResistenceTo));
-            }
-            if (!string.IsNullOrEmpty(filter.InmunityTo))
-            {
-                predicates.Add(x => x.Inmunities.Contains(filter.InmunityTo));
-            }
+            // Empty method
         }
     } 
 }

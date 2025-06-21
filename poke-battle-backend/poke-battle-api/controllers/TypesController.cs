@@ -72,5 +72,23 @@ namespace poke_battle_api.controllers
                 return BadRequest(new { message = ex.Message, errors = ex.Errors });
             }
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                var deleted = service.Delete(id);
+                return deleted ? Ok(deleted) : BadRequest(new { message = "Error", errors = new[] { "No se pudo eliminar la habilidad" } });
+            }
+            catch (RepositoryException ex)
+            {
+                return BadRequest(new { message = ex.Message, errors = new[] { ex.InnerException } });
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(new { message = ex.Message, errors = ex.Errors });
+            }
+        }
     }
 }

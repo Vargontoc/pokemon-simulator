@@ -1,12 +1,11 @@
 using poke.battle.Models.Impl;
+using poke_battle_infraestructure.filters;
 
 namespace poke.battle.infraestructure.filters
 {
     public class TypesFilter : IFilter<TypeModel>
     {
-        public string Search { get; set; } = string.Empty;
-        public string WeakTo {  get; set; } = string.Empty;
-        public string ResistenceTo { get; set; } = string.Empty;
-        public string InmunityTo { get; set; } = string.Empty;
+        public List<FilterEntry> Entries { get; set; } = [];
+
     }
 }

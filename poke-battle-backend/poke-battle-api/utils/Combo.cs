@@ -4,7 +4,7 @@
     {
         public List<ComboItem> Items { get; set; } = [];
 
-        public List<string> GetKeysSelected() => Items.Where(x => x.Checked).Select(x => x.Key).ToList();
+        public List<string> GetKeysSelected() => Items.Select(x => x.Key).ToList();
 
        
     }

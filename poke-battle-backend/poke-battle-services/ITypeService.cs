@@ -7,5 +7,6 @@ namespace poke.battle.services
     {
         TypeModel Save(TypeModel model);
         TypeModel Update(TypeModel model);
+        bool Delete(int id);
     }
 }

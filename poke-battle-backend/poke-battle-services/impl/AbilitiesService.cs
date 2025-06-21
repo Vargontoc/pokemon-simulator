@@ -7,9 +7,8 @@ using poke_battle_infraestructure.validators;
 
 namespace poke.battle.services.impl
 {
-    public class AbilitiesService(IAbilitiesRespository repository) : IAbilityService
+    public class AbilitiesService(IAbilitiesRespository repository, IPokemonService specieSerice, Validator<AbilityModel> validator) : IAbilityService
     {
-
         public PageResponse<AbilityModel> FindAll(AbilitiesFilter filter, PageRequest pageRequest)
         {
             return repository.GetAll(filter, pageRequest);
@@ -28,14 +27,25 @@ namespace poke.battle.services.impl
 
         public AbilityModel Save(AbilityModel model)
         {
-            ValidationHelper.Validate(v =>
-            {
-                v.Check(string.IsNullOrEmpty(model.Name), "El nombre interno es obligatorio");
-                v.Check(string.IsNullOrEmpty(model.DisplayName), "El nombre público es obligatorio");
-                v.Check(!string.IsNullOrEmpty(model.Name) && repository.FindByName(model.Name) != null, "Ya existe una habilidad con ese nombre");
-            });
-
+            validator.Validate(model);
             return repository.Save(model);
+        }
+
+        public AbilityModel Update(AbilityModel model)
+        {
+            validator.Validate(model);
+            return repository.Update(model);
+        }
+
+        public bool Delete(int id)
+        {
+            var toDelete = GetById(id);
+            var species = specieSerice.FindAll(null!, null!).Results;
+            if (species.Any(x => (x.Abilities != null && x.Abilities.Contains(toDelete.Name)) || (toDelete.Name.Equals(x.HiddenAbility))))
+                throw new RepositoryException($"La habilidad '{toDelete.DisplayName}' la tiene asignada algun Pokémon");
+
+            return repository.Delete(toDelete);
+
         }
     }
 }

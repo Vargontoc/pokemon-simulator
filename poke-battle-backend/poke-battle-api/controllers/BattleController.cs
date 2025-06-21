@@ -12,6 +12,7 @@ using poke.battle.Models.Impl;
 using poke.battle.services;
 using poke_battle_api.dtos;
 using poke_battle_api.mappers.impl;
+using poke_battle_api.services;
 using System.Data.Common;
 using System.Threading.Tasks;
 
@@ -19,15 +20,15 @@ namespace poke_battle_api.controllers
 {
     [ApiController]
     [Route("api/battle")]
-    public class BattleController(ILogger<BattleController> logger, ITypeService typeService, IPokemonService pokeService, IMoveService moveService, IBattleContextBuilder _builder, IBattleContextFormatter _formatter, IBattleStore _store, HttpClient _client) : ControllerBase
+    public class BattleController(ILogger<BattleController> logger,
+        IBattleIAService battleService,
+        ITypeService typeService, IPokemonService pokeService, IMoveService moveService, IBattleContextBuilder _builder, IBattleContextFormatter _formatter, IBattleStore _store, HttpClient _client) : ControllerBase
     {
         private readonly ILogger<BattleController> _logger = logger;
         private readonly IBattleContextBuilder _builder = _builder;
         private readonly IBattleContextFormatter _formatter = _formatter;
         private readonly IBattleStore _store = _store;
         private readonly HttpClient _http = _client;
-        private readonly IPokemonService _pokeService = pokeService;
-        private readonly IMoveService _moveService = moveService;
         private readonly ITypeService _typeService = typeService;
 
 
@@ -45,7 +46,7 @@ namespace poke_battle_api.controllers
 
             try
             {
-                var speciesAvailables = _pokeService.FindAll(null!, null!).Results.Where(x => !string.IsNullOrEmpty(x.DisplayName));
+                var speciesAvailables = pokeService.FindAll(null!, null!).Results.Where(x => !string.IsNullOrEmpty(x.DisplayName));
 
                 var player = CreateBattlers(request.Battlers);
                 var iaSelection = new TeamSelectionRequest()
@@ -60,15 +61,11 @@ namespace poke_battle_api.controllers
                 var species = speciesAvailables.Select(x => x.Name).OrderBy(x => rng.Next()).Take(request.Battlers.Length).ToList();
 
 
-                var decision = await _http.PostAsJsonAsync("http://localhost:5072/api/gen-ai/battle/select-team", iaSelection);
-                var botResponse = await decision.Content.ReadFromJsonAsync<TeamSelectionResponse>();
+                var botResponse = await battleService.DecideTeam(iaSelection);
 
-
-                if(botResponse != null && botResponse.Team != null && botResponse.Team.Count != 0)
-                {
-                    _logger.LogInformation(botResponse.Reason);
-                    species = botResponse.Team;
-                }
+                _logger.LogInformation(botResponse.Reason);
+                species = botResponse.Team;
+                
 
                 _store.Update(idBattleGenerated, new Battle(new BattleContext(
                     player: CreateBattlers(request.Battlers),
@@ -121,7 +118,7 @@ namespace poke_battle_api.controllers
             foreach(var dto in context)
             {
   
-                var specie = _pokeService.GetByName(dto.Specie);
+                var specie = pokeService.GetByName(dto.Specie);
                 if (specie == null)
                     throw new Exception($"Specie {dto.Specie} not found");
                 PBattler b = new(specie, dto.Level != 0 ? dto.Level : 100);
@@ -133,9 +130,9 @@ namespace poke_battle_api.controllers
                 var rng  = new Random();
                 var moveNames = movepool.OrderBy(_ => rng.Next()).Take(movepool.ToList().Count > 4 ? 4: movepool.ToList().Count);
 
-                if (dto.Moves != null && dto.Moves.Length > 0 && dto.Moves.Length <= 4)
+                if (dto.Moves != null && dto.Moves.Length > 0 && dto.Moves.Length <= 4 && dto.Moves.Any(x => !string.IsNullOrEmpty(x)))
                 {
-                    moveNames = _moveService.FindAll(null!, null!).Results.Where(x => dto.Moves.Contains(x.Name)).Select(x => x.Name);
+                    moveNames = moveService.FindAll(null!, null!).Results.Where(x => dto.Moves.Where(x => !string.IsNullOrEmpty(x)).Contains(x.Name)).Select(x => x.Name);
                 }
                 var moves = moveNames
                                 .Select(n => moveService.GetByName(n))
@@ -162,11 +159,13 @@ namespace poke_battle_api.controllers
 
         private BattlerInfoResponse CreateResponse(List<PBattler> player, List<PBattler> enemy)
         {
-            BattlerInfoResponse response = new();
-            player.ForEach(battler => { response.Battlers.Add(CreateBattleInfo(battler)); } );
-            enemy.ForEach(battler => { response.Battlers.Add(CreateBattleInfo(battler)); });
 
-            return response;
+                BattlerInfoResponse response = new();
+                player.ForEach(battler => { response.Battlers.Add(CreateBattleInfo(battler)); } );
+                enemy.ForEach(battler => { response.Battlers.Add(CreateBattleInfo(battler)); });
+
+                return response;
+
         }
 
 
@@ -205,11 +204,6 @@ namespace poke_battle_api.controllers
                 }).ToList()
 
             };
-        }
-
-        private object CreateCategory(MoveType moveType)
-        {
-            throw new NotImplementedException();
         }
 
         private object CreateType(string type)
@@ -329,24 +323,32 @@ namespace poke_battle_api.controllers
                 Prompt = prompt,
             };
 
-            var decision = await _http.PostAsJsonAsync("http://localhost:5072/api/gen-ai/battle/decide", aiRequest);
-            var botResponse = await decision.Content.ReadFromJsonAsync<BattleDecisionResponse>();
-
-            if(botResponse == null) return StatusCode(500, "Failed to get a response from the AI bot.");
-            _logger.LogInformation("AI Bot Response: {Action} - {Value} - {Rationale}", botResponse.Action, botResponse.Value, botResponse.Rationale);
-            if (botResponse.Action.Equals("move"))
+            try
             {
-                battle.QueueAttackAction(botResponse.Value, battle.Context.Enemy.First(x => x.IsActive));
-            }
 
-            if(botResponse.Action.Equals("switch"))
+                var botResponse = await battleService.DecideAction(aiRequest);
+
+            
+                _logger.LogInformation("AI Bot Response: {Action} - {Value} - {Rationale}", botResponse.Action, botResponse.Value, botResponse.Rationale);
+                if (botResponse.Action.Equals("move"))
+                {
+                    battle.QueueAttackAction(botResponse.Value, battle.Context.Enemy.First(x => x.IsActive));
+                }
+
+                if(botResponse.Action.Equals("switch"))
+                {
+                    battle.QueueSwitchAction(botResponse.Value, battle.Context.Enemy.First(x => x.IsActive));
+                }
+
+                battle.Execute();
+
+                return Ok(new { events = battle.Events});
+            }
+            catch (Exception ex)
             {
-                battle.QueueAttackAction(botResponse.Value, battle.Context.Enemy.First(x => x.IsActive));
+                _logger.LogError(ex, "No se pudo hacer turno de batalla");
+                return BadRequest("Error");
             }
-
-            battle.Execute();
-
-            return Ok(new { events = battle.Events});
         }
   
     }

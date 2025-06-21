@@ -19,7 +19,7 @@ namespace poke_battle_tests
         {
             if(_factory == null)
             {
-                ITypeService typeService = new TypesService(new TypesRepository());
+                ITypeService typeService = new TypesService(new TypesRepository(), null!, null!, null!);
                 TypeEffectivenessResolver.Initialize(typeService.FindAll(null!, null!).Results);
                 IPokemonService pokeService = new PokemonsService(new PokemonsRepository());
                 IMoveService moveService = new MovesService(new MovesRepository());

@@ -4,11 +4,23 @@
     <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>poke.battle.bridge</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+	<Nullable>enable</Nullable>  
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\poke-battle-core\poke-battle-core.csproj" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+		<OutputPath>bin\Debug\</OutputPath>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<OutputPath>bin\Release\</OutputPath>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<ProjectReference Include="..\poke-battle-core\poke-battle-core.csproj" />
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="..\..\poke-battle-tools\poke-battle-genai\DLL" />
+	</Target>
 
 </Project>

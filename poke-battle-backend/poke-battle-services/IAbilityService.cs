@@ -6,5 +6,9 @@ namespace poke.battle.services
     public interface IAbilityService : IGenericService<AbilityModel, AbilitiesFilter>
     {
         AbilityModel Save(AbilityModel model);
+
+        AbilityModel Update(AbilityModel model);
+
+        bool Delete(int id);
     }
 }

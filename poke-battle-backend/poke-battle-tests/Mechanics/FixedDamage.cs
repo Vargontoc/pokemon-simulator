@@ -13,7 +13,7 @@ namespace poke_battle_tests.Mechanics
         [Fact]
         public void DragonRage_DealsFixedDamage()
         {
-            ITypeService typeService = new TypesService(new TypesRepository());
+            ITypeService typeService = new TypesService(new TypesRepository(), null!, null!, null!);
             TypeEffectivenessResolver.Initialize(typeService.FindAll(null!, null!).Results);
             IPokemonService specieService = new PokemonsService(new PokemonsRepository());
             IMoveService moveService = new MovesService(new MovesRepository());
@@ -39,7 +39,7 @@ namespace poke_battle_tests.Mechanics
         [Fact]
         public void SeismicToss_DealsFixedDamage()
         {
-            ITypeService typeService = new TypesService(new TypesRepository());
+            ITypeService typeService = new TypesService(new TypesRepository(), null!, null!, null!);
             TypeEffectivenessResolver.Initialize(typeService.FindAll(null!, null!).Results);
             IPokemonService specieService = new PokemonsService(new PokemonsRepository());
             IMoveService moveService = new MovesService(new MovesRepository());

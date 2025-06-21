@@ -10,7 +10,7 @@ namespace poke_battle_api.mappers.impl
     {
         public static PBattlerDto ConvertTo(PBattler battler)
         {
-            IMapper<TypeDto, TypeModel> mapper = new TypeMapper(new TypesService(new TypesRepository()));
+            IMapper<TypeDto, TypeModel> mapper = new TypeMapper(new TypesService(new TypesRepository(), null!, null!, null!));
             return new()
             {
                 Nickname = battler.Nickname,

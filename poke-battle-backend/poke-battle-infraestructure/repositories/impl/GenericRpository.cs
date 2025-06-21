@@ -1,7 +1,10 @@
-using System.Reflection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using poke.battle.infraestructure.filters;
 using poke.battle.Models;
+using poke_battle_infraestructure.filters;
+using System.Reflection;
+using System.Text.Json;
 
 namespace poke.battle.infraestructure.repositories.impl
 {
@@ -124,16 +127,16 @@ namespace poke.battle.infraestructure.repositories.impl
         protected List<T> ApplyOrderBy(List<T> data, OrderBy? orderBy) 
         {
             if(orderBy == null || string.IsNullOrEmpty(orderBy.Property))
-                return data;
+                return [.. data.OrderBy(x => x.Id)];
 
             var propInfo = typeof(T).GetProperty(orderBy.Property, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
             if(propInfo == null || propInfo.PropertyType.IsArray)
                 return data;
 
 
-            return orderBy.Direction == OrderDirection.desc ? 
-            data.OrderByDescending(e => propInfo.GetValue(e, null)).ToList() : 
-            data.OrderBy(e => propInfo.GetValue(e, null)).ToList();
+            return orderBy.Direction == OrderDirection.desc ?
+            [.. data.OrderByDescending(e => propInfo.GetValue(e, null))] :
+            [.. data.OrderBy(e => propInfo.GetValue(e, null))];
         }
 
         private int GetId(List<T> list) {
@@ -143,9 +146,9 @@ namespace poke.battle.infraestructure.repositories.impl
         private void PreparePredicates(F filter)
         {
             predicates.Clear();
-            if(filter != null && !string.IsNullOrEmpty(filter.Search))
+            if(filter != null && filter.Entries != null && filter.Entries.Count != 0)
             {
-                predicates.Add(x => x.DisplayName.Contains(filter.Search, StringComparison.OrdinalIgnoreCase));
+                CreatePredicates(filter.Entries);
             }
 
             if(filter != null)
@@ -153,6 +156,186 @@ namespace poke.battle.infraestructure.repositories.impl
                 CreatePredicates(filter!);
             }
         }
+
+        private void CreatePredicates(List<FilterEntry> entries)
+        {
+            foreach (FilterEntry entry in entries)
+            {
+                var propInfo = typeof(T).GetProperty(entry.Property, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                if (propInfo == null) continue;
+
+                AddPredicateForProperty(propInfo, entry);
+            }
+        }
+        private void AddPredicateForProperty(PropertyInfo propInfo, FilterEntry entry) 
+        {
+
+            if (entry.Value == null)
+            {
+                if(IsValidTypeForNull(entry.Type))
+                {
+                    predicates.Add(x => propInfo.GetValue(x) == null && entry.Type == FilterType.isNull ||
+                                         propInfo.GetValue(x) != null && entry.Type == FilterType.isNotNull);
+                }else
+                {
+                    return;
+                }
+
+            }
+                
+
+            var type = propInfo.PropertyType;
+
+            if (type == typeof(string) && IsValidTypeForText(entry.Type))
+            {
+                var strValue = ExtractStringValue(entry.Value!);
+                if (!string.IsNullOrEmpty(strValue))
+                    predicates.Add(CreateForText(strValue, propInfo, entry.Type));
+            }
+            else if (IsNumericType(type) && IsValidTypeForNumber(entry.Type))
+            {
+                if (TryExtractNumber(entry.Value!, out double number))
+                    predicates.Add(CreateNumericPredicate(number, propInfo, entry.Type));
+            }
+            else if (!IsPrimitiveType(type) && type.IsArray && IsValidTypeForList(entry.Type))
+            {
+                var list = ExtractList(entry.Value!, type);
+                if (list != null && list.Count > 0)
+                    predicates.Add(CreateInListPredicate(list, propInfo, entry.Type));
+            }
+        }
+
+        private static bool IsPrimitiveType(Type type)
+        {
+            return type.IsPrimitive || type == typeof(string) || type == typeof(decimal);
+        }
+
+        private static bool TryExtractNumber(object value, out double result)
+        {
+            result = 0;
+
+            switch (value)
+            {
+                case JsonElement json when json.ValueKind == JsonValueKind.Number:
+                    return json.TryGetDouble(out result);
+                case IConvertible conv:
+                    try
+                    {
+                        result = Convert.ToDouble(conv);
+                        return true;
+                    }
+                    catch { return false; }
+                default:
+                    return double.TryParse(value.ToString(), out result);
+            }
+        }
+
+        private static Func<T, bool> CreateNumericPredicate(double value, PropertyInfo prop, FilterType type)
+        {
+            return type switch
+            {
+                FilterType.equals => x => Convert.ToDouble(prop.GetValue(x)!) == value,
+                FilterType.notEquals => x => Convert.ToDouble(prop.GetValue(x)!) != value,
+                FilterType.greaterThan => x => Convert.ToDouble(prop.GetValue(x)!) > value,
+                FilterType.greaterThanOrEqual => x => Convert.ToDouble(prop.GetValue(x)!) >= value,
+                FilterType.lessThanOrEqual => x => Convert.ToDouble(prop.GetValue(x)!) < value,
+                FilterType.lessEqual => x => Convert.ToDouble(prop.GetValue(x)!) <= value,
+                _ => throw new ArgumentException($"Tipo de filtro numérico no soportado: {type}")
+            };
+        }
+
+        private static bool IsNumericType(Type type)
+        {
+            return type == typeof(int) || type == typeof(long) || type == typeof(float) ||
+                   type == typeof(double) || type == typeof(decimal) || type == typeof(byte) ||
+                   type == typeof(short) || type == typeof(uint) || type == typeof(ulong) ||
+                   type == typeof(ushort) || type == typeof(sbyte);
+        }
+
+
+        private static List<object>? ExtractList(object rawValue, Type targetType)
+        {
+            try
+            {
+                if (rawValue is JsonElement json && json.ValueKind == JsonValueKind.Array)
+                {
+                    var list = new List<object>();
+                    foreach (var el in json.EnumerateArray())
+                    {
+                        object? val = el.ValueKind switch
+                        {
+                            JsonValueKind.String => el.GetString(),
+                            JsonValueKind.Number when targetType == typeof(int) && el.TryGetInt32(out var i) => i,
+                            JsonValueKind.Number when targetType == typeof(long) && el.TryGetInt64(out var l) => l,
+                            JsonValueKind.Number when targetType == typeof(double) && el.TryGetDouble(out var d) => d,
+                            JsonValueKind.Number when targetType == typeof(decimal) && el.TryGetDecimal(out var dec) => dec,
+                            _ => null
+                        };
+                        if (val != null) list.Add(val);
+                    }
+                    return list;
+                }
+
+                if (rawValue is IEnumerable<object> directList)
+                    return [.. directList];
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private static  Func<T, bool> CreateInListPredicate(List<object> values, PropertyInfo prop, FilterType type)
+        {
+            return type switch
+            {
+                FilterType.inList => x =>
+                {
+                    var val = prop.GetValue(x);
+                    return val != null && values.Contains(val);
+                }
+                ,
+                FilterType.notInList => x =>
+                {
+                    var val = prop.GetValue(x);
+                    return val == null || !values.Contains(val);
+                }
+                ,
+                _ => throw new ArgumentException("Tipo de lista no soportado.")
+            };
+        }
+
+        private static string? ExtractStringValue(object value)
+        {
+            return value switch
+            {
+                string s => s,
+                JsonElement json => json.ValueKind == JsonValueKind.String ? json.GetString() : null,
+                _ => value.ToString()
+            };
+        }
+
+
+        private static Func<T, bool> CreateForText(string value, PropertyInfo prop, FilterType type)
+        {
+
+            return type switch
+            {
+                FilterType.contains => x => prop.GetValue(x)?.ToString()?.Contains(value, StringComparison.OrdinalIgnoreCase) ?? false,
+                FilterType.startsWith => x => prop.GetValue(x)?.ToString()?.StartsWith(value, StringComparison.OrdinalIgnoreCase) ?? false,
+                FilterType.endsWith => x => prop.GetValue(x)?.ToString()?.EndsWith(value, StringComparison.OrdinalIgnoreCase) ?? false,
+                FilterType.equals => x => string.Equals(prop.GetValue(x)?.ToString(), value, StringComparison.OrdinalIgnoreCase),
+                FilterType.notEquals => x => !string.Equals(prop.GetValue(x)?.ToString(), value, StringComparison.OrdinalIgnoreCase),
+                _ => throw new ArgumentException($"Tipo de filtro no soportado: {type}")
+            };
+        }
+
+        private static bool IsValidTypeForNull(FilterType type) => type is FilterType.isNull or FilterType.isNotNull;
+        private static bool  IsValidTypeForNumber(FilterType type) => type is FilterType.equals or FilterType.notEquals or FilterType.greaterThan or FilterType.greaterThanOrEqual or FilterType.lessThanOrEqual or FilterType.lessEqual;
+        private static bool IsValidTypeForText(FilterType type) => type is FilterType.contains or FilterType.startsWith or FilterType.endsWith or FilterType.equals or FilterType.notEquals;
+        private static bool IsValidTypeForList(FilterType type) => type is FilterType.inList or FilterType.notInList;
 
         private List<T> ApplyPredicates(List<T> data) 
         {

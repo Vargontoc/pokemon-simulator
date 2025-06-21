@@ -12,8 +12,8 @@ Console.WriteLine("\n=== Simulación de batalla pokemon ===\n");
 
 
 // Servicios
-var typesService = new TypesService(new TypesRepository());
-TypeEffectivenessResolver.Initialize(typesService.GetAll(null!, null!).Results);
+var typesService = new TypesService(new TypesRepository(), null!, null!, null!);
+TypeEffectivenessResolver.Initialize(typesService.FindAll(null!, null!).Results);
 
 IMoveService moveService = new MovesService(new MovesRepository());
 IPokemonService pokemonService = new PokemonsService(new PokemonsRepository());

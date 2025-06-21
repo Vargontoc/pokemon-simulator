@@ -4,11 +4,24 @@
     <ProjectReference Include="..\poke-battle-models\poke-battle-models.csproj" />
   </ItemGroup>
 
-  <PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+		<OutputPath>bin\Debug\</OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<OutputPath>bin\Release\</OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>poke_battle_core</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="..\..\poke-battle-tools\poke-battle-genai\DLL" />
+	</Target>
 
 </Project>

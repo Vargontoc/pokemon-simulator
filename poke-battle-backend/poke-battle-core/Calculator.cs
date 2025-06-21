@@ -108,6 +108,19 @@ namespace poke.battle.core
             return [.. table.Values.OrderBy(x => x)];
         }
 
+        public static int CalculateExpGainer(int level, int expBase, int participants = 1, bool luckyEgg = false, bool trainer = false)
+        {
+            if (level < 0 || level > CoreSettings.MAX_LEVEL || expBase < 0)
+                return 0;
+
+            double trainerMultiplier = trainer ? 1.5 : 1.0;
+            double baseExp = (expBase * trainerMultiplier * level) / (7.0 * participants);
+
+            if (luckyEgg) baseExp *= 1.5;
+            return (int)Math.Floor(baseExp);
+            
+        }
+
         #endregion 
     }
 }
