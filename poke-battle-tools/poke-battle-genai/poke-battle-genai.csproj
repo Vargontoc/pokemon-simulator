@@ -19,11 +19,15 @@
 
   <ItemGroup>
     <Reference Include="poke-battle-bridge">
-      <HintPath>..\..\poke-battle-backend\poke-battle-bridge\bin\Debug\net9.0\poke-battle-bridge.dll</HintPath>
+      <HintPath>DLL\poke-battle-bridge.dll</HintPath>
     </Reference>
     <Reference Include="poke-battle-core">
-      <HintPath>..\..\poke-battle-backend\poke-battle-bridge\bin\Debug\net9.0\poke-battle-core.dll</HintPath>
+      <HintPath>DLL\poke-battle-core.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DLL\" />
   </ItemGroup>
 
 </Project>

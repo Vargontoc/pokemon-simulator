@@ -1,33 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.SemanticKernel;
 using poke.battle.genai.Models;
+using poke.battle.genai.Models.Agents;
+using System.Runtime.InteropServices;
 
 namespace poke.battle.genai.Controllers
 {
     [ApiController]
-    [Route("api/gen-ai/crud")]
-    public class AdminController(IAgentRouter router, ChatMemory memory) : Controller
+    [Route("api/admin")]
+    public class AdminController(PingAgent agent) : Controller
     {
-        private readonly IAgentRouter _agentRouter = router;
-        private readonly ChatMemory _chatMemory = memory;
-
-        [HttpPost("translator")]
-        public async Task<IActionResult> Translate([FromBody] ChatMessage message)
+        [HttpGet("health")]
+        public async Task<IActionResult> CheckHealth()
         {
-            var agent = _agentRouter.GetAgent(message.agent);
-            _chatMemory.Messages.Add(new()
+            try
             {
-                Role = "user",
-                Content = message.text
-            });
+                var response = await agent.InvokeAsync(null!);
+                if(string.IsNullOrEmpty(response))
+                    return BadRequest(response);
 
-            string response = await agent.InvokeAsync(message);
-            _chatMemory.Messages.Add(new()
+                return Ok();
+            }
+            catch
             {
-                Role = "agent",
-                Content = response
-            });
-            // Logic to add a new translator
-            return Ok(new { response });
+                return BadRequest();
+            }
         }
     }
 }
