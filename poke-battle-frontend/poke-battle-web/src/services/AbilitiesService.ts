@@ -4,7 +4,9 @@ import type { PageResponse } from "../models/PageResponse";
 import type { PageRequest } from "../models/PageRequest";
 import type { AbilitiesFilter } from "../models/AbilitiesFilter";
 import type { Ability } from "@/models/Ability";
+import { useErrorModal } from "@/composables/UseErrorModal";
 
+const { showErrorModal} = useErrorModal();
 export class AbilitiesService {
     private readonly http: AxiosInstance
     constructor(http: AxiosInstance) {
@@ -34,10 +36,8 @@ export class AbilitiesService {
             const res = await this.http.post<Ability>("/ability", ability);
             return res.data;
         }catch(error: any) {
-            if(error.response && error.response.status === 400){
-                throw error.response.data.errors;
-            }
-            throw ["Error inesperado al guardar."];
+            showErrorModal("Error", "Error inesperado al guardar la habilidad.", error);
+            return Promise.reject(error);
         }
     }
 
@@ -48,10 +48,30 @@ export class AbilitiesService {
             const res = await this.http.put<Ability>("/ability", ability);
             return res.data;
         }catch(error: any) {
-            if(error.response && error.response.status === 400){
-                throw error.response.data.errors;
-            }
-            throw ["Error inesperado al guardar."];
+            showErrorModal("Error", "Error inesperado al actualizar la habilidad.", error);
+            return Promise.reject(error);
         }
     }
+
+    async delete(id: number): Promise<Boolean> {
+        try {
+            const res = await this.http.delete<boolean>(`/ability/${id}`);
+            return res.data;
+        } catch (error: any) {
+            showErrorModal("Error", "Error inesperado al eliminar la habilidad.", error);
+            return Promise.reject(error);
+        }
+    }
+
+    async generateAbilities(): Promise<Ability> { 
+        try {
+            const res = await this.http.get<Ability>("/ability/generate");
+            return res.data;
+        } catch (error: any) {
+            showErrorModal("Error", "Error inesperado al generar una habilidad.", error);
+            return Promise.reject(error);
+        }
+
+    }
+
 }

@@ -5,7 +5,7 @@
                <l-columns @sort="$emit('sort-column', $event)" :columns="columns"/>
             </thead>
             <tbody>
-                <l-rows :rows="rows" @selected-item="$emit('selected-item', $event)" />
+                <l-rows :rows="rows" @edit="$emit('edit', $event)" @remove="$emit('remove', $event)" />
             </tbody>
             <tfoot v-if="rows.length != 0">
                 <l-paginator

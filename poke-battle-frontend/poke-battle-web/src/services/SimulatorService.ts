@@ -22,8 +22,32 @@ export class SimulatorService {
         return res.data;
     }
 
+    async getCalculateGainedExperience(level: number, base: number, participants: number, trainer: boolean, luckyEgg: boolean) :Promise<number>
+    {
+        const res = await this.http.post('/simulator/experience/gained',{
+            level: level,
+            baseExperience: base,
+            participants: participants,
+            trainer: trainer,
+            luckyEgg: luckyEgg
+        });
+        return res.data;
+    }
+
     async getGraphGrowth(code: string) : Promise<number[]> {
         const res =  await this.http.get(`/simulator/experience/graph/${code}`);
+        return res.data;
+    }
+
+    async getMultipliersOnDefense(types: string[]) : Promise<Record<number, { key: string, value: string,  icon?: string }[]>> { 
+        const res = await this.http.post('/simulator/type/defender', types);
+        console.log(res.data);
+        return res.data;
+    }
+
+    async getMultipliersOnAttack(type: string) : Promise<Record<number, { key: string, value: string,  icon?: string }[]>> { 
+        const res = await this.http.post('/simulator/type/attacker', [type]);
+        console.log(res.data);
         return res.data;
     }
 }

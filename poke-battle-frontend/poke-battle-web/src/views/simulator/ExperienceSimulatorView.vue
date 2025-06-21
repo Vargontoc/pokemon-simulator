@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import type { LCombo } from '@/models/LCombo';
+import { LCombo } from '@/models/LCombo';
 import {  ref } from 'vue';
 import LComboComponent from '@/components/LComboComponent.vue';
 import { ComboService } from '@/services/CombosService';
@@ -86,7 +86,7 @@ const chartOptions = {
 }
 // Hardcoded party data
 
-const comboGrowth = ref<LCombo>({});
+const comboGrowth = ref<LCombo>(new LCombo());
 
 // Method to handle growth selection
 const handleGrowthSelected = async (keys: string[]) => {

@@ -1,44 +1,55 @@
 <template>
-    <div class="form-group">
-         <div v-if="caption" class="form-label">{{ caption }}</div>
-         <div class="form form-multi-combo" :class="{disabled: props.disabled, readonly: props.readonly}">
-             <div class="multi-combo-header">
-                 <input :disabled="props.disabled" @focus="openDropsown" type="text" v-model="inputModel" class="multi-combo-search" :placeholder="selectedLabels?.length ? '': 'Seleccionar...'" />
-                 <button :disabled="props.disabled" type="button" class="multi-combo-toogle" @click="toogleDropdown">▼</button>
-             </div>
-     
-             <div class="multi-combo-chips" v-if="isMultiple && selectedLabels?.length">
-                 <span class="chip" v-for="i in selectedItems" :key="i.key">{{ i.value }}
-                     <button :disabled="props.readonly || props.disabled" class="chip-remove" @click="removeOption(i.key)">x</button>
-                 </span>
-             </div>
-     
-             <div v-show="isOpen" class="multi-combo-dropdown">
-                 <div @click.stop="toogleSelection(item.key)" class="multi-combo-option" :class="{selected: internalSelected.includes(item.key!)}" v-for="item in filteredItems" :key="item.key">
-                     <template v-if="type === 'text-with-image'"> 
-                         <span v-if="item.icon" class="option-icon">
-                             <img :src="item.icon" :alt="item.value"/>
-                         </span>
-                         {{ item.value }}
-                     </template>
-                     <template v-else-if="type === 'only-image'">
-                         <span v-if="item.icon" class="option-icon">
-                             <img :src="item.icon" :alt="item.value"/>
-                         </span>
-                     </template>
-                     <template v-else-if="type === 'only-text'">
-                         {{ item.value }}
-                     </template>
-                 </div>
-             </div>
-         </div>
+    <div class="combo-wrapper" >
+        <div v-if="caption" class="form-label">{{ caption }} <span v-if="invalid" class="required-icon" title="Campo obligatorio">❗</span>  </div>
+        <div class="form form-multi-combo" :class="{disabled: props.disabled, readonly: props.readonly, 'is-invalid': invalid}">
+            <!-- Combo -->
+            <div class="multi-combo-header">
+                <input :disabled="props.disabled" @focus="() => { isOpen = true }" type="text" v-model="filter" class="multi-combo-search" placeholder="Seleccionar..." />
+                <button v-if="!props.disabled && (filter || internalSelected.length > 0)" type="button" class="multi-combo-clear" @click.self="clearSelection" title="Limpiar seleccion">✖</button>
+                <button :disabled="props.disabled" type="button" class="multi-combo-toogle" @click="toogleDropdown" title="Desplegar">▼</button>
+            </div>
+    
+            <!-- Chips-->
+            <div class="multi-combo-chips-wrapper" v-if="visibleChips.length != 0">
+                <div ref="chipContainer" class="multi-combo-chips">
+                    <span class="chip" v-for="(item, index) in visibleChips" :key="item.key">
+                        {{ item.value }} <button class="chip-remove" @click="removeOption(item.key)">X</button>
+                    </span>
+                    <span v-if="hiddenChipsCount > 0" class="chip more-chip" @click="showAll = !showAll">
+                        +{{ hiddenChipsCount }}
+                    </span>
+                </div>
+            </div>
+            
+            <!-- Dropdown -->
+            <div v-show="isOpen" class="multi-combo-dropdown">
+                <div @click.stop="toogleSelection(item.key)" class="multi-combo-option" :class="{selected: internalSelected.includes(item.key!)}" v-for="item in filteredItems" :key="item.key">
+                    <template v-if="type === 'text-with-image'"> 
+                        <span v-if="item.icon" class="option-icon">
+                            <img :src="item.icon" :alt="item.value"/>
+                        </span>
+                        <span class="option-label"> {{ item.value }} </span> 
+                    </template>
+                    <template v-else-if="type === 'only-image'">
+                        <span v-if="item.icon" class="option-icon">
+                            <img :src="item.icon" :alt="item.value"/>
+                        </span>
+                    </template>
+                    <template v-else-if="type === 'only-text'">
+                        <span class="option-label"> {{ item.value }} </span> 
+                    </template>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 </template>
 
 <script setup lang="ts">
 import type { LCombo } from '@/models/LCombo';
 import type { TypeOption } from '@/models/LComboItem';
-import { computed, ref } from 'vue';
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 
 const props = defineProps<{
     model: LCombo
@@ -47,18 +58,44 @@ const props = defineProps<{
     caption?: string,
     maxSelected?: number,
     disabled?: boolean,
-    readonly?: boolean
+    readonly?: boolean,
+
+    required?: boolean,
+    isInvalid?: boolean,
+    maxVisibleChips?: number,
 }>()
 
 const isOpen = ref<boolean>(false);
 const filter = ref<string>('');
 const internalSelected = ref<string[]>([...props.keysSelected])
+const chipContainer = ref<HTMLElement | null>(null);
+const showAll = ref(false);
+const chipWidths = ref<number[]>([]);
+
 
 const emit = defineEmits(['update-selected'])
 
-const selectedLabels = computed(() => {
-    return props.model.items?.filter(i => i.key !== undefined && internalSelected.value.includes(i.key!)).map(i => i.value)
+const visibleChips = computed(() => {
+    if(showAll.value || !chipContainer.value) return selectedItems.value;
+    let totalWidth = 0;
+    const maxWidth = chipContainer.value.clientWidth;
+    const result: typeof selectedItems.value = [];
+
+    chipWidths.value.forEach((width, i) => {
+        const chip = selectedItems.value[i];
+        if(!chip) return;
+        if(totalWidth + width + 60 < maxWidth) {
+            result.push(chip);
+            totalWidth += width;
+        }
+    })
+
+    return result;
 });
+
+const hiddenChipsCount = computed(() => {
+    return selectedItems.value.length - visibleChips.value.length;
+})
 
 const filteredItems = computed(() => {
     if(!filter.value) return props.model.items
@@ -73,28 +110,25 @@ const max = computed(() => Math.min(props.maxSelected ?? 1, props.model.items?.l
 
 const isMultiple = computed(() => max.value > 1)
 
-const singleSelectedItem = computed(() => {
-    if(!isMultiple.value)
-        return props.model.items.find(i => internalSelected.value.includes(i.key!)) ?? null;
-    return null;
+const invalid = computed(() => {
+    if(props.isInvalid) return true;
+    if(props.required) return internalSelected.value.length === 0;
+    return false;
 })
 
-const inputModel = computed({
-    get() {
-        return isMultiple.value ? filter.value : singleSelectedItem.value?.value ?? filter.value;
-    },
-    set(val: string) {
-        filter.value = val;
-    }
-})
+function updateChipsWidths() {
+    nextTick(() => {
+        if(!chipContainer.value) return;
+        const elements = chipContainer.value.querySelectorAll('.chip');
+        chipWidths.value = Array.from(elements).map(el => (el as HTMLElement).offsetWidth);
+    });
+}
 
 function toogleDropdown() {
+    console.log('toogleDropdown', isOpen.value);
     isOpen.value = !isOpen.value;
 }
 
-function openDropsown() {
-    isOpen.value = true;
-}
 
 function removeOption(key: string) {
     if(props.readonly || props.disabled) return;
@@ -103,8 +137,9 @@ function removeOption(key: string) {
         internalSelected.value.splice(index, 1);
         emitSelection();
     }
-    
 }
+
+
 
 function toogleSelection(key: string) {
     if(props.readonly || props.disabled) return;
@@ -132,118 +167,201 @@ function emitSelection() {
     emit('update-selected', internalSelected.value);
 }
 
+function clearSelection() {
+    internalSelected.value = [];
+    filter.value = '';
+    isOpen.value = false;
+    emitSelection();
+}
+
+defineExpose({
+    clearSelection
+})
+
+onMounted(() => {
+    window.addEventListener('resize', updateChipsWidths);
+})
+onUnmounted(() => { window.removeEventListener('resize', updateChipsWidths)});
 </script>
 
 <style lang="scss" scoped>
+.combo-wrapper{ display: contents;}
 .form.form-multi-combo 
 {
     position: relative;
-    width: 100%;
     border: 1px solid #ccc;
     border-radius: 6px;
     padding: .5rem;
     background-color: #fff;
 
-    .multi-combo-header {
+    &.is-invalid {
+        border-color: #e53935;
+        background-color: #fff5f5;
+    }
+}
+
+
+
+// Header
+.multi-combo-header {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+
+    .multi-combo-search {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        padding: .25rem;
+        background-color: transparent;
+    }
+
+    .multi-combo-toogle, .multi-combo-clear {
+        background: none;
+        border: none;
+        font-size: 1.1rem;
+        cursor: pointer;
+        padding: .25rem .5rem;
+        color: #555;
+        transition: color .2s ease;
+
+        &:hover {
+            color: #000;
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+            color: #aaa;
+        }
+    }
+}
+
+
+// Chip container
+.multi-combo-chips-wrapper {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  background-color: #f8f9fa;
+  border: 1px dashed #d0d0d0;
+  min-height: 40px;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  background-color: #e0f2ff;
+  color: #0366d6;
+  border: 1px solid #a4d4f5;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chip-remove {
+  background: none;
+  border: none;
+  color: #0366d6;
+  font-weight: bold;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: #d93025;
+  }
+}
+
+.more-chip {
+  display: inline-flex;
+  align-items: center;
+  background-color: #e9ecef;
+  color: #495057;
+  border: 1px solid #ced4da;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: #dee2e6;
+  }
+}
+
+
+// Dropdown 
+.multi-combo-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    max-height: 240px;
+    overflow-y: auto;
+    padding: .25rem 0;
+    z-index: 9999;
+    box-shadow: 0 8px 30px rgba(0,0,0, .15);
+    animation: dropdownFadeIn 0.15s ease-out;
+    .multi-combo-option {
         display: flex;
         align-items: center;
+        gap: .5rem;
+        padding: .5rem .75rem;
+        cursor: pointer;
+        font-size: .95rem;
+        transition: background-color .2s ease, color .2 ease;
+        color: #333;
 
-        .multi-combo-search {
+        .option-icon img {
+            width: 1.2rem;
+            height: 1.2rem;
+            object-fit: contain;
+        }
+
+        .option-label {
             flex: 1;
-            border: none;
-            outline: none;
-            font-size: 1rem;
         }
 
-        .multi-combo-toogle {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            padding: 0 .5rem;
-            cursor: pointer;
-        }
-    }
-
-    .multi-combo-chips {
-        margin-top: .5rem;
-        display: flex;
-        flex-wrap: wrap;
-        gap: .4rem;
-
-        .chip {
-            background-color: #e0e0e0;
-            padding: .25rem .5rem;
-            border-radius: 1rem;
-            color: black;
-            display: flex;
-            align-items: center;
-            font-size: .9rem;
-
-            .chip-remove {
-                background: none;
-                border: none;
-                margin-left: .4rem;
-                cursor: pointer;
-                font-weight: bold;
-            }
-
-            .chip-remove:hover{
-                color: red;
-            }
-        }
-    }
-
-    .multi-combo-dropdown {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: white;
-        border: 1px solid #ccc;
-        max-height: 200px;
-        overflow-y: auto;
-        z-index: 10;
-        margin-top: .25rem;
-        padding: .5rem;
-        box-shadow: 0 4px 12px rgba(0,0,0, .1);
-
-        .multi-combo-option {
-            padding: .4rem;
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            color: black;
-            gap: .5rem;
-            transition: background-color .2s ease;
-        }
-
-        .multi-combo-option:hover {
+        &:hover {
             background-color: #f0f0f0;
         }
 
-        .multi-combo-option.selected {
+        &.selected {
             background-color: #dbeafe;
             font-weight: bold;
-        }
-
-        .multi-combo-option {
-
-            .option-icon img {
-                width: 1rem;
-                height: 1rem;
-            }
         }
     }
 }
 
-.form.form-multi-combo.disabled {
-    background-color: #f5f5f5;
-    pointer-events: none;
-    opacity: .6;
-}
-
-.form.form-multi-combo.readonly {
-    background-color: #fafafa;
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

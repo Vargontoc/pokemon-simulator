@@ -10,12 +10,6 @@
             <button @click="$emit('create')" title="Crear">
                 <i class="fas fa-plus"></i>
             </button>
-            <button @click="$emit('edit')" title="Editar">
-                <i class="fas fa-edit"></i>
-            </button>
-            <button @click="$emit('delete')" title="Eliminar">
-                <i class="fas fa-trash"></i>
-            </button>
             
             <div v-if="hasMoreActions" class="more-options">
                 <button @click="toggleMenu" title="Más opciones">

@@ -1,12 +1,11 @@
 <template>
     <div class="view">
         <l-filter-view :show="showFilter" @search-filter="handleRefresh"  @clean-filter="handleClear">
-            <l-types-filter-view :filter="filter"/>
+            <l-types-filter-view ref="filterView" :filter="filter"/>
         </l-filter-view>
 
         <l-actions 
         @refresh="handleRefresh"
-        @edit="handleEdit"
         @create="handleCreate"
         @search="handleSearch" />
 
@@ -15,11 +14,18 @@
             @change-page="handleChangePage"
             @change-page-size="handleChangePageSize"
             @selected-item="handleSelected"
+            @edit="handleEdit"
+            @remove="handleRemove"
         ></l-table>
 
-        <l-modal :show="showEditionModal" :title="!!selected.id ? 'Editar: ' +  selected.name : 'Nuevo typo'" @close-modal="handleClose">
-            <l-types-edition-view :errors="errors" :item="selected" :is-edit="!!selected.id" 
-            @save="handleSave" @cancel="handleClose"/>
+        <l-modal :show="showEditionModal" :title="!!selected.id ? 'Editar: ' +  selected.name : 'Nuevo tipo'" @close-modal="handleClose">
+            <l-types-edition-view ref="editionView"  :item="selected" :is-edit="!!selected.id" />
+                <template #footer>
+                    <div class="actions" style="display: flex; gap: .5rem;">
+                        <button class="btn btn-add" @click.self="handleSave" :disabled="editionView && editionView.isValid == false">{{ !editionView ? '' : editionView.isEdit ?  'Actualizar' : 'Guardar' }}</button>
+                        <button class="btn btn-cancel" @click.self="handleClose">Cancelar</button>
+                    </div>
+                </template>
         </l-modal>
     </div>
 </template>
@@ -66,8 +72,8 @@ const selected = ref<Type>(new Type());
 // Formularios
 const showEditionModal = ref(false);
 const showFilter = ref(false);
-const errors = ref<string[]>([]);
-
+const editionView = ref<InstanceType<typeof LTypesEditionView>>();
+const filterView = ref<InstanceType<typeof LTypesFilterView>>();
 // Metodos
 const getItems = async () => {
     const response = await service.getAll(filter.value, request.value) as PageResponse
@@ -131,12 +137,20 @@ const handleRefresh = () => {
     getItems()
 }
 
-const handleEdit = () => {
-    console.log(selected.value)
+const handleEdit = async (id:number) => {
+    selected.value = await service.get(id) as Type;
     if(selected.value.id) {
         showEditionModal.value = true;
     }
 }
+
+const handleRemove = async (id: number) => {
+    await service.delete(id).then(() => {
+        getItems();
+    });
+
+}
+
 
 const handleCreate = () => {
     selected.value = new Type();
@@ -146,20 +160,14 @@ const handleCreate = () => {
 const handleSave = async () => {
     if(selected.value.id === 0  || selected.value.id === undefined) {
         service.save(selected.value).then(() => {
-            errors.value = [];
             showEditionModal.value = false;
             getItems();
-        }).catch((err) => {
-            errors.value = err;
-        });
+        })
     }else {
         service.update(selected.value).then(() => {
-            errors.value = [];
             showEditionModal.value = false;
             getItems();
-        }).catch((err) => {
-            errors.value = err;
-        });
+        })
         
     }
     
@@ -170,11 +178,12 @@ const handleSearch = () => {
 }
 
 const handleClear = () => {
-    filter.value.search = '';
+    if(filterView.value) {
+        filterView.value.clearFilter();
+    }
 }
 
 const handleClose =() => {
     showEditionModal.value = false; 
-    errors.value = [];
 }
 </script>

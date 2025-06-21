@@ -1,3 +1,5 @@
+import type FilterEntry from "./FilterEntry";
+
 export class MovesFilter {
-    search: string = ""
+    entries: FilterEntry[] = [];
 }

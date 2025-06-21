@@ -5,6 +5,7 @@
                 <i v-if="c.key == propertySorted" class="text-xs">{{ direction === OrderDirection.asc ? '▲' : '▼' }}</i>
             </span>
         </th>
+        <th></th>
     </tr>
 </template>
 

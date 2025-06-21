@@ -1,21 +1,21 @@
 <template>
     <div class="paginator">
+    <div class="paginator__total">Total: {{ total }}</div>
     
-        <div class="paginator__total">Total: {{ total }}</div>
-        
-        <div class="paginator__controls">
-            <button @click="prev" :disabled="page === 1" class="paginator__button"><- Prev</button>
-            <div class="paginator__center">
-                <span>{{ page }} of {{ totalPages }}</span>
-            </div>
-            <button @click="next" :disabled="totalPages === page" class="paginator__button">Next -></button>
-        
-            <select @change="handleChangeSize" v-model.number="pageSize" class="paginator__select">
-                <option v-for="size in sizes" :key="size" :value="size">{{  size }}  / Page </option>
-            </select>
+    <div class="paginator__controls">
+        <div class="paginator__left">
+        <button @click="prev" :disabled="page === 1" class="paginator__button">← Prev</button>
+        <div class="paginator__center">
+            <span>{{ page }} of {{ totalPages }}</span>
+        </div>
+        <button @click="next" :disabled="totalPages === page" class="paginator__button">Next →</button>
         </div>
 
-    </div>
+        <select @change="handleChangeSize" v-model.number="pageSize" class="paginator__select">
+        <option v-for="size in sizes" :key="size" :value="size">{{ size }} / Page</option>
+        </select>
+  </div>
+</div>
 </template>
 <script setup lang="ts">
 import { computed, toRefs } from 'vue';
@@ -53,54 +53,77 @@ const handleChangeSize = (event: Event) => {
 </script>
 <style lang="scss">
 .paginator {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+
+  @media (min-width: 480px) {
+    flex-direction: row;
     justify-content: space-between;
-    gap: 1rem;
-    margin-top: 1rem;
+    align-items: center;
+  }
 
-    &__total {
-        font-size: 0.875rem;
-        color: #4b5563;
-        margin-top: 0.650rem;
+  &__total {
+    font-weight: 500;
+    color: #333;
+  }
+
+  &__controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__center {
+    font-weight: 500;
+    color: #444;
+    min-width: 80px;
+    text-align: center;
+  }
+
+  &__button {
+    padding: 0.4rem 0.8rem;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background-color: #e0e0e0;
     }
 
-    &__center 
-    {
-        font-weight: 500;
-        font-size: 0.9rem;
-        color: #1f2937;
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
+  }
 
-    &__controls {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+  &__select {
+    margin-left: auto;
+    padding: 0.4rem;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+
+    &:focus {
+      border-color: #2a6ebc;
+      outline: none;
     }
-
-    &_button {
-        padding: 0.35rem 0.75rem;
-        border-radius: 0.375rem;
-        background-color: #f3f4f6;
-        border: none;
-        cursor: pointer;
-        transition: background 0.2s ease;
-
-        &:hover {
-            background-color: #e5e7eb;
-        }
-
-        &:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-    }
-
-    &__select {
-        padding: 0.25rem 0.5rem;
-        border-radius: 0.375rem;
-        border: 1px solid #d1d5db;
-        font-size: 0.875rem;
-    }
+  }
 }
 </style>

@@ -17,6 +17,9 @@
       <l-sidebar :collapsed="!sidebarOpen" />
       <main :class="['main',  { 'with-sidebar': sidebarOpen}]">
         <RouterView />
+        <toast-container />
+        <error-modal />
+        <confirm-dialog />
       </main>
     </div>
   </div>
@@ -29,6 +32,9 @@ import { onMounted, ref } from 'vue';
 import LSidebar from './components/LSidebar.vue';
 import { RouterView } from 'vue-router';
 import ChatBotView from './components/ChatBotView.vue';
+import ToastContainer from './components/ToastContainer.vue';
+import ErrorModal from './components/ErrorModal.vue';
+import ConfirmDialog from './components/ConfirmDialog.vue';
 const isDark = ref(false);
 const sidebarOpen = ref(false);
 const showChat = ref(false);

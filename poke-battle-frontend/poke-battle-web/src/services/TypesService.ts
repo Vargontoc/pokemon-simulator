@@ -3,7 +3,9 @@ import type { PageResponse } from "@/models/PageResponse";
 import type { Type } from "@/models/Type";
 import type { TypesFilter } from "@/models/TypesFilter";
 import type { AxiosInstance } from "axios";
+import { useErrorModal } from "@/composables/UseErrorModal";
 
+const { showErrorModal} = useErrorModal();
 export class TypesService {
     private readonly http: AxiosInstance
     constructor(http: AxiosInstance) {
@@ -27,28 +29,34 @@ export class TypesService {
         return res.data;
     }
 
-    async save(ability:Type) : Promise<Type | string[]> {
+    async save(entity:Type) : Promise<Type | string[]> {
         try {
-            const res = await this.http.post<Type>("/types", ability);
+            const res = await this.http.post<Type>("/types", entity);
             return res.data;
         }catch(error: any) {
-            if(error.response && error.response.status === 400){
-                throw error.response.data.errors;
-            }
-            throw ["Error inesperado al guardar."];
+            showErrorModal("Error", "Error inesperado al guardar el tipo.", error);
+            return Promise.reject(error);
         }
     }
 
     
-    async update(ability:Type) : Promise<Type> {
+    async update(entity:Type) : Promise<Type> {
         try {
-            const res = await this.http.put<Type>("/types", ability);
+            const res = await this.http.put<Type>("/types", entity);
             return res.data;
         }catch(error: any) {
-            if(error.response && error.response.status === 400){
-                throw error.response.data.errors;
-            }
-            throw ["Error inesperado al guardar."];
+            showErrorModal("Error", "Error inesperado al actualizar el tipo.", error);
+            return Promise.reject(error);
+        }
+    }
+
+        async delete(id: number): Promise<Boolean> {
+        try {
+            const res = await this.http.delete<boolean>(`/types/${id}`);
+            return res.data;
+        } catch (error: any) {
+            showErrorModal("Error al eliminar la habilidad", "Error inesperado al eliminar el tipo.", error);
+            return Promise.reject(error);
         }
     }
 }

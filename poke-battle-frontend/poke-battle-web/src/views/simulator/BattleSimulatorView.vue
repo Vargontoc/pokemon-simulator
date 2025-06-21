@@ -2,11 +2,8 @@
 <div class="battle-simulator-view">
     <div class="battle-simulator-content">
         <h1>Team Builder</h1>
-        <div class="form-battler">
             <battler-form ref="battlerForm"></battler-form>
-            
-          </div>
-          <button class="btn btn-add" @click="onAddBattler">Add</button>
+          <button class="btn btn-add" @click="onAddBattler" style="margin-top: 1.5rem">Add</button>
 
         <table>
             <thead>
@@ -82,8 +79,13 @@ function onStartClick() {
             battlers:  battlers.value
         }).then((response: string) => {
             router.push({name: 'Battle', params: { id: response }})
-        }).catch((error: any) => {
-            console.log('Error starting battle', error)
+        }).catch(() => {
+            router.push({
+              name: 'Error',
+              query: {
+                message: 'Error al procesar la acción del bot. Intentelo más tarde.'
+              }
+            })
         })
     }
 }
@@ -104,12 +106,7 @@ function onAddBattler() {
 
 </script>
 <style lang="scss" scoped>
-.form-battler {
-  display: flex;
-  align-items: center; // centra verticalmente
-  gap: 1rem; // espacio entre elementos
-  flex-wrap: wrap; // permite que se acomode bien en pantallas pequeñas (opcional)
-}
+
 table {
   width: 100%;
   border-collapse: collapse;

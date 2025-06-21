@@ -1,12 +1,11 @@
 <template>
 <div class="view">
     <l-filter-view :show="showFilter" @search-filter="handleRefresh"  @clean-filter="handleClear">
-        <l-abilities-filter-view :filter="filter"/>
+        <l-abilities-filter-view ref="filterView" :filter="filter"/>
     </l-filter-view>
     
     <l-actions 
         @refresh="handleRefresh"
-        @edit="handleEdit"
         @create="handleCreate"
         @search="handleSearch" />
 
@@ -15,12 +14,24 @@
         @change-page="handleChangePage"
         @change-page-size="handleChangePageSize"
         @selected-item="handleSelected"
+        @edit="handleEdit"
+        @remove="handleRemove"
+
     />
     
     <l-modal :show="showEditionModal" :title="!!selected.id ? 'Editar: ' +  selected.displayName : 'Nueva habilidad'" @close-modal="handleClose" >
-        <l-abilities-edition-view :errors="errors" :item="selected" :is-edit="!!selected.id" 
-        @save="handleSave"
-        @cancel="handleClose"/>
+        <l-abilities-edition-view ref="editionView" v-model:item="selected" :is-edit="!!selected.id" />
+        <template #footer>
+            <div class="actions" style="display: flex; gap: .5rem;" @click.self="handleGenerate">
+                <button class="btn btn-generate">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M13 2v2a7 7 0 1 1-7 7H4a9 9 0 1 0 9-9z" fill="currentColor"/>
+                    <path d="M12 6v6l4 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>Generar </button>
+                    <button class="btn btn-add" @click.self="handleSave" :disabled="!editionView?.isValid">{{ !editionView ? '' : editionView.isEdit ?  'Actualizar' : 'Guardar' }}</button>
+                    <button class="btn btn-cancel" @click.self="handleClose">Cancelar</button>
+                </div>
+        </template>
     </l-modal>
     
 </div>
@@ -41,22 +52,24 @@ import type { OrderBy } from '@/models/OrderBy';
 import { PaginationData } from '@/models/PaginationData';
 import LModal from '@/components/LModal.vue';
 import  LAbilitiesEditionView  from '@/views/crud/abilities/LAbilitiesEditionView.vue';
-import { Ability } from '@/models/Ability';
 import LActions from '@/components/LActions.vue';
 import LFilterView from '@/components/LFilterView.vue';
 import LAbilitiesFilterView from './LAbilitiesFilterView.vue';
-
+import type { Ability } from '@/models/Ability';
+import { useToasts } from '@/composables/UseToats';
 const service = new AbilitiesService(client);
 const request = ref<PageRequest>(new PageRequest());
 const filter = ref<AbilitiesFilter>(new AbilitiesFilter());
 const pagination = ref<PaginationData>(new PaginationData());
-
-const selected = ref<Ability>(new Ability());
+const editionView = ref<InstanceType<typeof LAbilitiesEditionView>>();
+const filterView = ref<InstanceType<typeof LAbilitiesFilterView>>();
+const selected = ref<Ability>({});
 const items = ref<LRow[]>([]);
 
 const showEditionModal = ref(false);
 const showFilter = ref(false);
-const errors = ref<string[]>([]);
+const { showToast } = useToasts();  
+
 
 const columns = ref<LColumn[]>([
     { key: "displayName", display: "Nombre" },
@@ -114,28 +127,45 @@ const handleRefresh = () => {
     getItems()
 }
 
-const handleEdit = () => {
+const handleEdit = async  (id: number) => {
+    selected.value = await service.get(id) as Ability;
     if(selected.value.id) {
         showEditionModal.value = true;
     }
 }
 
+const handleRemove = async (id: number) => {
+    await service.delete(id).then(() => {
+        getItems();
+    });
+
+}
+
 const handleCreate = () => {
-    selected.value = new Ability();
+    selected.value = {
+        name: '',
+        displayName: '',
+        id: undefined
+    } as Ability;
     showEditionModal.value = true;
 }
 
 const handleSave = async () => {
-
-
-        if(selected.value.id === 0  || selected.value.id === undefined) {
-            service.save(selected.value).then(() => {
-                errors.value = [];
-                showEditionModal.value = false;
-            }).catch((err) => {
-                errors.value = err;
-            });
-        }
+    
+    
+    if(selected.value.id === 0  || selected.value.id === undefined) {
+        service.save(selected.value).then(() => {
+            showEditionModal.value = false;
+            getItems();
+            showToast('success', 'Habilidad creada correctamente');
+        })
+    }else {
+        service.update(selected.value).then(() => {
+            showEditionModal.value = false;
+            getItems();
+            showToast('success', 'Habilidad actualizada correctamente');
+        })
+    }
     
 }
 
@@ -144,11 +174,19 @@ const handleSearch = () => {
 }
 
 const handleClear = () => {
-    filter.value.search = '';
+    filterView.value?.clearFilter();
 }
 
 const handleClose =() => {
     showEditionModal.value = false; 
-    errors.value = [];
 }
+
+const handleGenerate = async () => {
+    await service.generateAbilities().then((r) => {
+        if(editionView.value) {
+            editionView.value.generated(r);
+        }
+    })
+}
+
 </script>

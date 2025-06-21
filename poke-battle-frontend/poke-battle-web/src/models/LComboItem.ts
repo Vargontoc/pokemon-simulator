@@ -1,7 +1,7 @@
 export class LComboItem {
     key: string = ''
     value?: string
-    checked?: boolean = false
+    checked?: boolean
     icon?: string
     tooltip?: string 
 }

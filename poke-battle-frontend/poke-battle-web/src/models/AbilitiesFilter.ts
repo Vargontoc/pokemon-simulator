@@ -1,3 +1,5 @@
+import type FilterEntry from "./FilterEntry";
+
 export class AbilitiesFilter {
-    search: string = ""
+    entries: FilterEntry[] = [];
 }
